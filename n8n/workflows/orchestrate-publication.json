@@ -1,0 +1,25 @@
+{
+  "name": "orchestrate-publication",
+  "meta": {
+    "version": "1.0.0",
+    "sourceOfTruth": "Next.js API",
+    "queueMode": true
+  },
+  "stages": [
+    "fetch-source",
+    "extract-youtube|extract-article",
+    "summarize-content",
+    "generate-social-copy",
+    "generate-image",
+    "update-status",
+    "notify-ops",
+    "publish-channel",
+    "error-handler"
+  ],
+  "notes": [
+    "All secrets must be referenced through n8n credentials or external secrets.",
+    "Every stage validates WorkflowEnvelope in and WorkflowResult out.",
+    "No node may use continueRegularOutput for extraction or publishing failures.",
+    "Parent workflow reports state transitions to signed internal API endpoints."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WorkflowEnvelope",
+  "type": "object",
+  "required": [
+    "correlationId",
+    "taskId",
+    "stage",
+    "idempotencyKey",
+    "trace",
+    "inputVersion",
+    "payload",
+    "attempt",
+    "requestedChannels"
+  ],
+  "properties": {
+    "correlationId": { "type": "string" },
+    "taskId": { "type": "string" },
+    "stage": { "type": "string" },
+    "idempotencyKey": { "type": "string" },
+    "trace": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "inputVersion": { "type": "string" },
+    "payload": { "type": "object" },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "requestedChannels": {
+      "type": "array",
+      "items": {
+        "enum": ["linkedin", "facebook", "instagram", "x", "threads"]
+      }
+    }
+  }
+}

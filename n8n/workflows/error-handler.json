@@ -1,0 +1,6 @@
+{
+  "name": "error-handler",
+  "responsibility": "Normalize retryable vs fatal failures, capture context and notify ops with the correlation ID.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

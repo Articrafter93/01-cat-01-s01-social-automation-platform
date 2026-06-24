@@ -1,0 +1,6 @@
+{
+  "name": "update-status",
+  "responsibility": "POST signed status transitions back to the application source-of-truth APIs.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

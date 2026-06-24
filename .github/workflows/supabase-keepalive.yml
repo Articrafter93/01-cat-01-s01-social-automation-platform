@@ -1,0 +1,27 @@
+name: Supabase Keep-Alive
+
+# Previene la pausa por inactividad de los 2 proyectos Supabase free del portfolio.
+# Ejecutar cada 4 dias (dentro del limite de ~7 dias de Supabase).
+# Schema de este proyecto: cat_01_s01 (Project A)
+on:
+  schedule:
+    - cron: '0 8 */4 * *'   # cada 4 dias a las 08:00 UTC
+  workflow_dispatch:          # activacion manual si hace falta
+
+jobs:
+  ping-supabase-projects:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Project A
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_PROJECT_A_URL }}/rest/v1/?apikey=${{ secrets.SUPABASE_PROJECT_A_ANON_KEY }}")
+          echo "Project A status: $STATUS"
+          [ "$STATUS" = "200" ] || exit 1
+
+      - name: Ping Supabase Project B
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_PROJECT_B_URL }}/rest/v1/?apikey=${{ secrets.SUPABASE_PROJECT_B_ANON_KEY }}")
+          echo "Project B status: $STATUS"
+          [ "$STATUS" = "200" ] || exit 1

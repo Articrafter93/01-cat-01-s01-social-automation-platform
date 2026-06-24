@@ -1,0 +1,6 @@
+{
+  "name": "fetch-source",
+  "responsibility": "Validate URL, enforce allowlist, block private hosts, fetch HTML or metadata with timeouts.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

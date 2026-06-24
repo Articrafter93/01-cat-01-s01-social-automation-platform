@@ -1,0 +1,6 @@
+{
+  "name": "extract-article",
+  "responsibility": "Parse sanitized HTML using a robust parser; never regex titles and paragraphs in production.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

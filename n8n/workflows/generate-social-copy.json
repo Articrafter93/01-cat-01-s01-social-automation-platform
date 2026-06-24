@@ -1,0 +1,6 @@
+{
+  "name": "generate-social-copy",
+  "responsibility": "Create per-channel drafts from versioned templates and send approval-gated channels to review.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

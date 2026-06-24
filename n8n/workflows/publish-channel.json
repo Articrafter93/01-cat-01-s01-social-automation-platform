@@ -1,0 +1,6 @@
+{
+  "name": "publish-channel",
+  "responsibility": "Publish approved content using preserved idempotency keys and partial-failure accounting.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "summarize-content",
+  "responsibility": "Generate normalized editorial summary through central prompt templates and strict JSON validation.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

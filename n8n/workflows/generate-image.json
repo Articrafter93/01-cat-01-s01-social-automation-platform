@@ -1,0 +1,6 @@
+{
+  "name": "generate-image",
+  "responsibility": "Optionally generate creative assets with retries, rate limits and signed callback reporting.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

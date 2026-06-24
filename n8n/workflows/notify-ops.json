@@ -1,0 +1,6 @@
+{
+  "name": "notify-ops",
+  "responsibility": "Dispatch approval, failure and SLA alerts without changing publication state directly.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}

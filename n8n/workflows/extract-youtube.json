@@ -1,0 +1,6 @@
+{
+  "name": "extract-youtube",
+  "responsibility": "Resolve transcript, validate existence and normalize source payload for summarization.",
+  "input": "WorkflowEnvelope",
+  "output": "WorkflowResult"
+}
