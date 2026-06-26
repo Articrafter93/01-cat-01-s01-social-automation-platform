@@ -13,25 +13,25 @@ export default async function ObservabilityPage() {
   const avgLatency = Math.round(events.reduce((sum, event) => sum + event.latencyMs, 0) / Math.max(events.length, 1));
 
   return (
-    <AppShell currentPath="/observability" eyebrow="Observabilidad" title="Costos, latencias y reintentos">
+    <AppShell currentPath="/observability" eyebrow="Observability" title="Costs, latencies and retries">
       <div className="grid gap-6 lg:grid-cols-3">
         <Card>
-          <CardHeader><CardTitle className="text-2xl">Costo aproximado</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-2xl">Approximate cost</CardTitle></CardHeader>
           <CardContent><p className="font-display text-4xl">{formatCurrency(llmCost)}</p></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-2xl">Latencia media</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-2xl">Average latency</CardTitle></CardHeader>
           <CardContent><p className="font-display text-4xl">{avgLatency} ms</p></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-2xl">Eventos trazados</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-2xl">Traced events</CardTitle></CardHeader>
           <CardContent><p className="font-display text-4xl">{events.length}</p></CardContent>
         </Card>
       </div>
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle>Resumen por etapa</CardTitle>
+          <CardTitle>Summary by stage</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {events.map((event) => (

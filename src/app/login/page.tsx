@@ -42,53 +42,77 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
   return (
     <main className="min-h-screen bg-background px-4 py-10 md:px-6">
-      <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[minmax(0,1.1fr)_420px]">
+      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.2fr)_420px]">
         <section className="rounded-[28px] border border-border/70 bg-card/70 p-6 shadow-panel backdrop-blur-sm md:p-8">
-          <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Acceso interno</p>
+          <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Internal access</p>
           <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight">Social Automation Platform</h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-            Centro de control editorial para revisar borradores, aprobaciones, trazabilidad e idempotencia de publicacion
-            antes de ejecutar integraciones externas.
+            Editorial control center to review drafts, approvals, traceability and publication idempotency
+            before running external integrations.
           </p>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <Card>
+            <Card className="text-center">
               <CardHeader>
                 <CardTitle className="text-lg">Editor</CardTitle>
-                <CardDescription>Crea borradores y solicita aprobacion.</CardDescription>
+                <CardDescription>Creates drafts and requests approval.</CardDescription>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">editor@antigravity.local</CardContent>
+              <CardContent className="whitespace-nowrap text-sm text-muted-foreground">editor@antigravity.local</CardContent>
             </Card>
-            <Card>
+            <Card className="text-center">
               <CardHeader>
                 <CardTitle className="text-lg">Approver</CardTitle>
-                <CardDescription>Aprueba, rechaza y observa eventos.</CardDescription>
+                <CardDescription>Approves, rejects and watches events.</CardDescription>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">approver@antigravity.local</CardContent>
+              <CardContent className="whitespace-nowrap text-sm text-muted-foreground">approver@antigravity.local</CardContent>
             </Card>
-            <Card>
+            <Card className="text-center">
               <CardHeader>
                 <CardTitle className="text-lg">Admin</CardTitle>
-                <CardDescription>Administra la configuracion interna.</CardDescription>
+                <CardDescription>Manages internal configuration.</CardDescription>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">admin@antigravity.local</CardContent>
+              <CardContent className="whitespace-nowrap text-sm text-muted-foreground">admin@antigravity.local</CardContent>
             </Card>
           </div>
         </section>
 
-        <Card className="self-start">
+        <Card className="flex flex-col justify-center">
           <CardHeader>
-            <CardTitle>Acceso</CardTitle>
-            <CardDescription>Usa una contrasena de 8 o mas caracteres para acceder al panel.</CardDescription>
+            <CardTitle>Sign in</CardTitle>
+            <CardDescription>Use a password of 8 or more characters to access the panel.</CardDescription>
           </CardHeader>
           <CardContent>
             <form action={loginAction} className="space-y-4">
               <input type="hidden" name="callbackUrl" value={callbackUrl} />
-              <Input name="email" type="email" placeholder="editor@antigravity.local" aria-label="Email" required />
-              <Input name="password" type="password" placeholder="minimo 8 caracteres" aria-label="Password" required minLength={8} />
-              {error ? <p className="text-sm text-destructive">No fue posible iniciar sesion con esas credenciales.</p> : null}
+              <Input
+                name="email"
+                type="email"
+                list="demo-accounts"
+                placeholder="editor@antigravity.local"
+                aria-label="Email"
+                autoComplete="off"
+                required
+              />
+              <datalist id="demo-accounts">
+                <option value="editor@antigravity.local">Editor — creates and requests approval</option>
+                <option value="approver@antigravity.local">Approver — approves and watches</option>
+                <option value="admin@antigravity.local">Admin — internal configuration</option>
+              </datalist>
+              <Input
+                name="password"
+                type="password"
+                placeholder="minimum 8 characters"
+                aria-label="Password"
+                defaultValue="demo-access"
+                required
+                minLength={8}
+              />
+              <p className="text-xs text-muted-foreground">
+                Demo: pick an account from the menu and the password is already filled in. Just press Enter.
+              </p>
+              {error ? <p className="text-sm font-medium text-danger">Could not sign in with those credentials.</p> : null}
               <Button type="submit" className="w-full">
-                Entrar al panel
+                Enter the panel
               </Button>
             </form>
           </CardContent>

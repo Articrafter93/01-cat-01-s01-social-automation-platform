@@ -19,8 +19,8 @@ describe("publication local fallback", () => {
       sourceUrl: "https://news.example.com/article",
       sourceType: "article",
       brand: "Antigravity",
-      locale: "es-CO",
-      tone: "Premium analítico",
+      locale: "en-US",
+      tone: "Analytical premium",
       useAiImage: true,
       requestedChannels: ["linkedin", "facebook"],
     });

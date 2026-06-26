@@ -1,0 +1,172 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - paragraph [ref=e7]: Editorial panel
+        - heading "Social Automation" [level=1] [ref=e8]
+      - generic [ref=e9]: Internal
+    - generic [ref=e10]:
+      - paragraph [ref=e11]: Workspace
+      - paragraph [ref=e12]: Manage drafts, approvals and publications from a single place.
+    - navigation [ref=e13]:
+      - generic [ref=e14]:
+        - img [ref=e15]
+        - text: Dashboard
+      - link "New publication" [ref=e18] [cursor=pointer]:
+        - /url: /publications/new
+        - img [ref=e19]
+        - text: New publication
+      - link "Approvals" [ref=e22] [cursor=pointer]:
+        - /url: /approvals
+        - img [ref=e23]
+        - text: Approvals
+      - link "History" [ref=e26] [cursor=pointer]:
+        - /url: /history
+        - img [ref=e27]
+        - text: History
+      - link "Observability" [ref=e30] [cursor=pointer]:
+        - /url: /observability
+        - img [ref=e31]
+        - text: Observability
+      - link "Settings" [ref=e33] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e34]
+        - text: Settings
+    - generic [ref=e38]:
+      - paragraph [ref=e39]: Session
+      - paragraph [ref=e40]: editor@antigravity.local
+      - paragraph [ref=e41]: Editor
+      - button "Sign out" [ref=e43] [cursor=pointer]:
+        - img [ref=e44]
+        - text: Sign out
+  - main [ref=e47]:
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - paragraph [ref=e50]: Operational control
+        - heading "Editorial dashboard" [level=2] [ref=e51]
+      - generic [ref=e52]: Editorial operation
+    - generic [ref=e53]:
+      - alert [ref=e54]: "Access denied: /settings is restricted to the Administrator role. You were redirected to the dashboard."
+      - generic [ref=e55]:
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - paragraph [ref=e59]: URLs processed
+            - img [ref=e60]
+          - generic [ref=e63]:
+            - paragraph [ref=e64]: "2"
+            - paragraph [ref=e65]: Total volume of tracked tasks.
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - paragraph [ref=e69]: Pending
+            - img [ref=e70]
+          - generic [ref=e73]:
+            - paragraph [ref=e74]: "1"
+            - paragraph [ref=e75]: Drafts, in-progress jobs and open gates.
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - paragraph [ref=e79]: Approved
+            - img [ref=e80]
+          - generic [ref=e83]:
+            - paragraph [ref=e84]: "0"
+            - paragraph [ref=e85]: Ready to publish or already orchestrated.
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - paragraph [ref=e89]: Published
+            - img [ref=e90]
+          - generic [ref=e93]:
+            - paragraph [ref=e94]: "1"
+            - paragraph [ref=e95]: Completed publications without duplication.
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - paragraph [ref=e99]: Failure rate
+            - img [ref=e100]
+          - generic [ref=e103]:
+            - paragraph [ref=e104]: 0%
+            - paragraph [ref=e105]: Retryable + fatal over the total.
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - generic [ref=e108]:
+            - heading "Active pipeline" [level=2] [ref=e109]
+            - paragraph [ref=e110]: Operational source of truth from the application, not from Google Sheets.
+          - generic [ref=e112]:
+            - article [ref=e113]:
+              - generic [ref=e114]:
+                - generic [ref=e115]:
+                  - heading "How enterprise editorial teams can automate social publishing safely" [level=3] [ref=e116]
+                  - paragraph [ref=e117]: https://example.com/insights/enterprise-social-ai
+                - generic [ref=e118]: needs approval
+              - generic [ref=e119]:
+                - generic [ref=e120]: linkedin
+                - generic [ref=e121]: facebook
+                - generic [ref=e122]: instagram
+                - generic [ref=e123]: x
+              - generic [ref=e124]:
+                - generic [ref=e125]:
+                  - generic [ref=e126]: Cost
+                  - strong [ref=e127]: $3.42
+                - generic [ref=e128]:
+                  - generic [ref=e129]: Last stage
+                  - strong [ref=e130]: generate-social-copy
+              - link "Open detail" [ref=e131] [cursor=pointer]:
+                - /url: /publications/task_001
+            - article [ref=e132]:
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - heading "Automation governance for multi-channel marketing" [level=3] [ref=e135]
+                  - paragraph [ref=e136]: https://www.youtube.com/watch?v=abc123
+                - generic [ref=e137]: published
+              - generic [ref=e138]:
+                - generic [ref=e139]: linkedin
+                - generic [ref=e140]: facebook
+                - generic [ref=e141]: instagram
+              - generic [ref=e142]:
+                - generic [ref=e143]:
+                  - generic [ref=e144]: Cost
+                  - strong [ref=e145]: $2.11
+                - generic [ref=e146]:
+                  - generic [ref=e147]: Last stage
+                  - strong [ref=e148]: publish-channel
+              - link "Open detail" [ref=e149] [cursor=pointer]:
+                - /url: /publications/task_002
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - heading "Overall status" [level=2] [ref=e153]:
+              - img [ref=e154]
+              - text: Overall status
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - generic [ref=e158]: Tasks ready to review
+                - generic [ref=e159]: Inbox up to date
+              - generic [ref=e160]:
+                - generic [ref=e161]:
+                  - img [ref=e162]
+                  - text: Publications in progress
+                - generic [ref=e165]: Active tracking
+              - generic [ref=e166]:
+                - generic [ref=e167]: Pending channels
+                - generic [ref=e168]: Require confirmation
+          - generic [ref=e169]:
+            - heading "Recent events" [level=2] [ref=e171]:
+              - img [ref=e172]
+              - text: Recent events
+            - generic [ref=e174]:
+              - generic [ref=e175]:
+                - generic [ref=e176]:
+                  - paragraph [ref=e177]: generate-social-copy
+                  - generic [ref=e178]: needs_approval
+                - paragraph [ref=e179]: Drafts generated for 4 channels; editorial gate raised for direct channels.
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - paragraph [ref=e182]: extract-article
+                  - generic [ref=e183]: ok
+                - paragraph [ref=e184]: Readable article extracted with sanitizer and HTML parser.
+              - generic [ref=e185]:
+                - generic [ref=e186]:
+                  - paragraph [ref=e187]: fetch-source
+                  - generic [ref=e188]: ok
+                - paragraph [ref=e189]: Source fetched and validated against the scrape allowlist.
+              - generic [ref=e190]:
+                - generic [ref=e191]:
+                  - paragraph [ref=e192]: publish-channel
+                  - generic [ref=e193]: ok
+                - paragraph [ref=e194]: LinkedIn, Facebook and Instagram published successfully.

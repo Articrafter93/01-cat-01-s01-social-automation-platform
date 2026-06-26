@@ -10,12 +10,12 @@ export default async function SettingsPage() {
   const [integrations, prompts] = await Promise.all([listIntegrations(), listPrompts()]);
 
   return (
-    <AppShell currentPath="/settings" eyebrow="Configuración" title="Integraciones y plantillas">
+    <AppShell currentPath="/settings" eyebrow="Configuration" title="Integrations and templates">
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <Card>
           <CardHeader>
-            <CardTitle>Cuentas conectadas</CardTitle>
-            <CardDescription>Resumen general de conexiones disponibles para trabajar en la plataforma.</CardDescription>
+            <CardTitle>Connected accounts</CardTitle>
+            <CardDescription>Overview of the connections available to work on the platform.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {integrations.map((integration) => (
@@ -25,7 +25,7 @@ export default async function SettingsPage() {
                   <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{integration.status}</span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {integration.status === "healthy" ? "Lista para usarse." : integration.status === "warning" ? "Requiere revisión." : "No disponible."}
+                  {integration.status === "healthy" ? "Ready to use." : integration.status === "warning" ? "Needs review." : "Unavailable."}
                 </p>
               </div>
             ))}
@@ -34,7 +34,7 @@ export default async function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Plantillas de contenido</CardTitle>
+            <CardTitle>Content templates</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {prompts.map((prompt) => (

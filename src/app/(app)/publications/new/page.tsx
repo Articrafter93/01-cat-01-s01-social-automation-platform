@@ -6,13 +6,13 @@ import { requirePageRole } from "@/server/auth/guard";
 export default async function NewPublicationPage() {
   await requirePageRole("editor", "/publications/new");
   return (
-    <AppShell currentPath="/publications/new" eyebrow="Ingesta" title="Nueva publicación">
+    <AppShell currentPath="/publications/new" eyebrow="Ingestion" title="New publication">
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
         <Card>
           <CardHeader>
-            <CardTitle>Crear tarea editorial</CardTitle>
+            <CardTitle>Create editorial task</CardTitle>
             <CardDescription>
-              Carga una fuente, define el tono y elige los canales que quieres trabajar.
+              Load a source, set the tone and choose the channels you want to work on.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -22,13 +22,13 @@ export default async function NewPublicationPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Antes de enviar</CardTitle>
+            <CardTitle>Before submitting</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
-            <p>Verifica que la fuente sea correcta y que el ángulo editorial esté claro.</p>
-            <p>LinkedIn, Facebook e Instagram pasarán por revisión antes de publicarse.</p>
-            <p>Si un canal no está listo, puedes dejarlo como borrador y retomarlo luego.</p>
-            <p>Los datos sensibles y accesos internos no se gestionan desde esta vista.</p>
+            <p>Check that the source is correct and that the editorial angle is clear.</p>
+            <p>LinkedIn, Facebook and Instagram will go through review before being published.</p>
+            <p>If a channel is not ready, you can leave it as a draft and pick it up later.</p>
+            <p>Sensitive data and internal access are not managed from this view.</p>
           </CardContent>
         </Card>
       </div>

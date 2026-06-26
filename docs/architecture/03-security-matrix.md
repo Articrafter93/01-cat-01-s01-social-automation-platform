@@ -1,11 +1,11 @@
-# Matriz de seguridad
+# Security matrix
 
-| Superficie | Riesgo | Control |
+| Surface | Risk | Control |
 |---|---|---|
-| Export histórico n8n | Secretos expuestos | Rotación inmediata, no reutilización, revisión de exposición |
-| URLs externas | SSRF / hosts privados | Allowlist, validación estricta de host, bloqueo RFC1918, timeout |
-| LLM JSON | Salida inválida | Validación Zod + rechazo de payload |
-| Publicación social | Duplicidad | Idempotency key por canal |
-| Integraciones | Sobreprivilegio | Scopes mínimos por ambiente |
-| Webhooks internos | Falsificación | Firma HMAC y verificación en API |
-| UI operativa | Exposición de secretos | Metadatos visibles; secretos fuera de UI |
+| n8n historical export | Exposed secrets | Immediate rotation, no reuse, exposure review |
+| External URLs | SSRF / private hosts | Allowlist, strict host validation, RFC1918 blocking, timeout |
+| LLM JSON | Invalid output | Zod validation + payload rejection |
+| Social publishing | Duplication | Per-channel idempotency key |
+| Integrations | Over-privilege | Minimal scopes per environment |
+| Internal webhooks | Forgery | HMAC signature and verification at the API |
+| Operational UI | Secret exposure | Visible metadata; secrets kept out of the UI |

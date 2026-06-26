@@ -47,7 +47,10 @@ export async function requireApiRole(minimumRole: UserRole): Promise<UserRole> {
 
 /**
  * For server-component pages. Redirects unauthenticated users to /login and
- * under-privileged users to /dashboard instead of throwing.
+ * under-privileged users back to /dashboard. The denied redirect carries the
+ * attempted path and the role it requires as query params, so the dashboard can
+ * surface an explicit "access denied" notice instead of bouncing the user
+ * silently (a silent bounce reads as a bug to anyone evaluating the app).
  */
 export async function requirePageRole(minimumRole: UserRole, pathname: string): Promise<UserRole> {
   const resolved = await resolveRole();
@@ -57,7 +60,7 @@ export async function requirePageRole(minimumRole: UserRole, pathname: string): 
   }
 
   if (!hasRole(resolved.role, minimumRole)) {
-    redirect("/dashboard");
+    redirect(`/dashboard?denied=${encodeURIComponent(pathname)}&need=${minimumRole}`);
   }
 
   return resolved.role;

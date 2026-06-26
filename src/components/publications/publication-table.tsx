@@ -24,17 +24,17 @@ export function PublicationTable({ tasks }: { tasks: PublicationTask[] }) {
 
           <div className="mt-4 grid gap-3 text-xs text-muted-foreground sm:grid-cols-3">
             <div className="rounded-2xl bg-background/60 p-3">
-              <span className="block uppercase tracking-[0.16em]">Costo</span>
+              <span className="block uppercase tracking-[0.16em]">Cost</span>
               <strong className="mt-1 block text-sm text-foreground">${task.metrics.totalEstimatedCostUsd.toFixed(2)}</strong>
             </div>
             <div className="rounded-2xl bg-background/60 p-3 sm:col-span-2">
-              <span className="block uppercase tracking-[0.16em]">Última etapa</span>
+              <span className="block uppercase tracking-[0.16em]">Last stage</span>
               <strong className="mt-1 block break-words text-sm text-foreground">{task.lastRunStage}</strong>
             </div>
           </div>
 
           <Link href={`/publications/${task.id}`} className="mt-4 inline-flex text-sm font-semibold text-primary underline-offset-4 hover:underline">
-            Abrir detalle
+            Open detail
           </Link>
         </article>
       ))}

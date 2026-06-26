@@ -9,6 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/history`, changeFrequency: "daily", priority: 0.7 },
     { url: `${base}/observability`, changeFrequency: "daily", priority: 0.7 },
     { url: `${base}/settings`, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${base}/privacidad`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${base}/privacy`, changeFrequency: "monthly", priority: 0.4 },
   ];
 }

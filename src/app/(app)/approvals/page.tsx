@@ -1,3 +1,4 @@
+import { CheckCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { ApprovalActions } from "@/components/publications/approval-actions";
 import { ChannelChip } from "@/components/publications/channel-chip";
@@ -13,8 +14,19 @@ export default async function ApprovalsPage() {
   const tasks = (await listPublications()).filter((task) => ["needs_approval", "draft"].includes(task.status));
 
   return (
-    <AppShell currentPath="/approvals" eyebrow="Editorial gate" title="Bandeja de aprobación">
+    <AppShell currentPath="/approvals" eyebrow="Editorial gate" title="Approval inbox">
       <div className="space-y-6">
+        {tasks.length === 0 ? (
+          <Card>
+            <CardContent className="flex flex-col items-center gap-2 py-16 text-center">
+              <CheckCheck className="h-8 w-8 text-primary" />
+              <p className="text-base font-semibold">You&apos;re all caught up</p>
+              <p className="max-w-md text-sm text-muted-foreground">
+                No publications are pending approval right now. New tasks that reach the editorial gate will appear here.
+              </p>
+            </CardContent>
+          </Card>
+        ) : null}
         {tasks.map((task) => (
           <Card key={task.id}>
             <CardHeader>
@@ -44,8 +56,8 @@ export default async function ApprovalsPage() {
               </div>
 
               <div className="rounded-[24px] border border-border bg-background/60 p-4">
-                <p className="text-sm font-semibold">Acciones</p>
-                <p className="mt-1 text-sm text-muted-foreground">Aprueba, devuelve a ajustes o reintenta la tarea desde aquí.</p>
+                <p className="text-sm font-semibold">Actions</p>
+                <p className="mt-1 text-sm text-muted-foreground">Approve, send back for changes or retry the task from here.</p>
                 <div className="mt-4">
                   <ApprovalActions publicationId={task.id} />
                 </div>

@@ -1,21 +1,21 @@
-# Runbook operativo sandbox
+# Sandbox operations runbook
 
-## Incidente: falla de acceso
-1. Confirmar que el usuario sandbox tenga rol esperado por email.
-2. Verificar redireccion a `/login` o respuesta `401/403` en API.
-3. Repetir con `editor`, `approver` y `admin` para confirmar enforcement.
+## Incident: access failure
+1. Confirm the sandbox user has the role expected for its email.
+2. Verify the redirect to `/login` or a `401/403` response from the API.
+3. Repeat with `editor`, `approver` and `admin` to confirm enforcement.
 
-## Incidente: falla de extraccion o persistencia
-1. Revisar `execution_events` por `correlationId`.
-2. Confirmar que Supabase sandbox este provisionado y con `schema` aplicado.
-3. Si la fuente no es segura o el sandbox no responde, bloquear `WF-011` y registrar evidencia.
+## Incident: extraction or persistence failure
+1. Review `execution_events` by `correlationId`.
+2. Confirm the Supabase sandbox is provisioned and has the `schema` applied.
+3. If the source is unsafe or the sandbox does not respond, block `WF-011` and record evidence.
 
-## Incidente: publicacion parcial o retry
-1. Revisar `publish_attempts` por canal.
-2. Confirmar aprobacion por canal.
-3. Reintentar solo el canal fallido conservando `idempotencyKey`.
+## Incident: partial publication or retry
+1. Review `publish_attempts` per channel.
+2. Confirm per-channel approval.
+3. Retry only the failed channel while keeping the `idempotencyKey`.
 
-## Incidente: credencial comprometida
-1. Rotar proveedor sandbox afectado.
-2. Reinyectar credenciales por canal seguro.
-3. Mantener el proyecto bloqueado hasta revalidar acceso y permisos.
+## Incident: compromised credential
+1. Rotate the affected sandbox provider.
+2. Re-inject credentials through a secure channel.
+3. Keep the project blocked until access and permissions are revalidated.

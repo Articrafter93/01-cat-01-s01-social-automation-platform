@@ -1,0 +1,33 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - paragraph [ref=e5]: Internal access
+      - heading "Social Automation Platform" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Editorial control center to review drafts, approvals, traceability and publication idempotency before running external integrations.
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - heading "Editor" [level=2] [ref=e11]
+            - paragraph [ref=e12]: Creates drafts and requests approval.
+          - generic [ref=e13]: editor@antigravity.local
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - heading "Approver" [level=2] [ref=e16]
+            - paragraph [ref=e17]: Approves, rejects and watches events.
+          - generic [ref=e18]: approver@antigravity.local
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - heading "Admin" [level=2] [ref=e21]
+            - paragraph [ref=e22]: Manages internal configuration.
+          - generic [ref=e23]: admin@antigravity.local
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - heading "Sign in" [level=2] [ref=e26]
+        - paragraph [ref=e27]: Use a password of 8 or more characters to access the panel.
+      - generic [ref=e29]:
+        - combobox "Email" [ref=e30]
+        - textbox "Password" [ref=e31]:
+          - /placeholder: minimum 8 characters
+          - text: demo-access
+        - paragraph [ref=e32]: "Demo: pick an account from the menu and the password is already filled in. Just press Enter."
+        - button "Enter the panel" [ref=e33] [cursor=pointer]

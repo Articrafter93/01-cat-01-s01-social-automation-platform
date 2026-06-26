@@ -18,7 +18,7 @@ export function getSupabaseServerClient() {
 
   if (!url || !key) {
     throw new DomainError(
-      "Supabase no está configurado. Define NEXT_PUBLIC_SUPABASE_URL y una clave de servidor o publishable en .env.local.",
+      "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and a server or publishable key in .env.local.",
       503,
     );
   }

@@ -1,19 +1,19 @@
-# Checklist de operacion sandbox
+# Sandbox operations checklist
 
-## Antes de validar
-- Credenciales sandbox cargadas por ambiente sin exponer valores.
-- `supabase/schema.sql` aplicado.
-- `supabase/seed.sql` aplicado.
-- Login sandbox operativo para `editor`, `approver` y `admin`.
+## Before validating
+- Sandbox credentials loaded per environment without exposing values.
+- `supabase/schema.sql` applied.
+- `supabase/seed.sql` applied.
+- Sandbox login working for `editor`, `approver` and `admin`.
 
-## Smoke test local
-- Crear tarea desde la UI.
-- Solicitar aprobacion.
-- Aprobar o rechazar.
-- Reintentar publicacion manteniendo `idempotencyKey`.
-- Ver timeline y metricas en dashboard/historial/observabilidad.
+## Local smoke test
+- Create a task from the UI.
+- Request approval.
+- Approve or reject.
+- Retry a publication while keeping the `idempotencyKey`.
+- View the timeline and metrics in dashboard/history/observability.
 
-## Cierre de esta fase
-- Registrar resultado de `WF-011`.
-- Registrar pasada funcional local.
-- Ejecutar `audit` y `vuln` solo si el sandbox ya responde.
+## Closing this phase
+- Record the `WF-011` result.
+- Record the local functional pass.
+- Run `audit` and `vuln` only once the sandbox already responds.

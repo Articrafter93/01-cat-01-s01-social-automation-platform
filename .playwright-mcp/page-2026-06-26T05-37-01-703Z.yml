@@ -1,0 +1,85 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - paragraph [ref=e7]: Editorial panel
+        - heading "Social Automation" [level=1] [ref=e8]
+      - generic [ref=e9]: Internal
+    - generic [ref=e10]:
+      - paragraph [ref=e11]: Workspace
+      - paragraph [ref=e12]: Manage drafts, approvals and publications from a single place.
+    - navigation [ref=e13]:
+      - link "Dashboard" [ref=e14] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e15]
+        - text: Dashboard
+      - link "New publication" [ref=e18] [cursor=pointer]:
+        - /url: /publications/new
+        - img [ref=e19]
+        - text: New publication
+      - generic [ref=e22]:
+        - img [ref=e23]
+        - text: Approvals
+      - link "History" [ref=e26] [cursor=pointer]:
+        - /url: /history
+        - img [ref=e27]
+        - text: History
+      - link "Observability" [ref=e30] [cursor=pointer]:
+        - /url: /observability
+        - img [ref=e31]
+        - text: Observability
+      - link "Settings" [ref=e33] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e34]
+        - text: Settings
+    - generic [ref=e38]:
+      - paragraph [ref=e39]: Session
+      - paragraph [ref=e40]: approver@antigravity.local
+      - paragraph [ref=e41]: Approver
+      - button "Sign out" [ref=e43] [cursor=pointer]:
+        - img [ref=e44]
+        - text: Sign out
+  - main [ref=e47]:
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - paragraph [ref=e50]: Editorial gate
+        - heading "Approval inbox" [level=2] [ref=e51]
+      - generic [ref=e52]: Editorial operation
+    - generic [ref=e55]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - heading "How enterprise editorial teams can automate social publishing safely" [level=2] [ref=e59]
+          - paragraph [ref=e60]: https://example.com/insights/enterprise-social-ai
+        - generic [ref=e61]: needs approval
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66]: linkedin
+              - generic [ref=e67]: 138 chars
+            - paragraph [ref=e68]: Automating social shouldn't feel like operational roulette
+            - paragraph [ref=e69]: We turn a scraping + AI + publishing chain into a traceable system, with approval and real per-channel controls.
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: facebook
+              - generic [ref=e73]: 104 chars
+            - paragraph [ref=e74]: From a fragile flow to a reliable operation
+            - paragraph [ref=e75]: The point isn't to publish more, but to publish with control, evidence and zero duplicates across channels.
+            - paragraph [ref=e76]: Confirm final CTA for Facebook.
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - generic [ref=e79]: instagram
+              - generic [ref=e80]: 92 chars
+            - paragraph [ref=e81]: A serious editorial system
+            - paragraph [ref=e82]: Modular automation, upfront approval and real observability for every publication.
+            - paragraph [ref=e83]: Add extended caption and curated hashtags.
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: Actions
+          - paragraph [ref=e86]: Approve, send back for changes or retry the task from here.
+          - generic [ref=e88]:
+            - textbox "Reviewer" [ref=e89]: Laura Ops
+            - generic [ref=e90]:
+              - button "Approve" [active] [ref=e91] [cursor=pointer]
+              - button "Gate" [ref=e92] [cursor=pointer]
+              - button "Reject" [ref=e93] [cursor=pointer]
+              - button "Retry" [ref=e94] [cursor=pointer]

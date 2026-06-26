@@ -20,30 +20,30 @@ export default async function PublicationDetailPage({ params }: { params: Promis
   }
 
   return (
-    <AppShell currentPath="" eyebrow="Detalle" title={publication.title}>
+    <AppShell currentPath="" eyebrow="Detail" title={publication.title}>
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]">
         <div className="space-y-6">
           <Card>
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <CardTitle>Resumen operativo</CardTitle>
-                  <CardDescription>Vista general de la tarea y su progreso.</CardDescription>
+                  <CardTitle>Operational summary</CardTitle>
+                  <CardDescription>Overview of the task and its progress.</CardDescription>
                 </div>
                 <StatusBadge status={publication.status} />
               </div>
             </CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-2">
               <div className="rounded-[22px] border border-border bg-background/60 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Fuente</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Source</p>
                 <p className="mt-2 break-all text-sm font-medium">{publication.sourceUrl}</p>
               </div>
               <div className="rounded-[22px] border border-border bg-background/60 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Última etapa</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Last stage</p>
                 <p className="mt-2 text-sm font-medium">{publication.lastRunStage}</p>
               </div>
               <div className="rounded-[22px] border border-border bg-background/60 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Canales</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Channels</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {publication.requestedChannels.map((channel) => (
                     <ChannelChip key={channel} channel={channel} />
@@ -51,7 +51,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
                 </div>
               </div>
               <div className="rounded-[22px] border border-border bg-background/60 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Costo estimado</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Estimated cost</p>
                 <p className="mt-2 text-sm font-medium">${publication.metrics.totalEstimatedCostUsd.toFixed(2)}</p>
               </div>
             </CardContent>
@@ -59,7 +59,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
           <Card>
             <CardHeader>
-              <CardTitle>Drafts por canal</CardTitle>
+              <CardTitle>Drafts by channel</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {publication.drafts.map((draft) => (
@@ -77,7 +77,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
           <Card>
             <CardHeader>
-              <CardTitle>Timeline de ejecución</CardTitle>
+              <CardTitle>Execution timeline</CardTitle>
             </CardHeader>
             <CardContent>
               <ExecutionTimeline events={publication.events} />
@@ -88,8 +88,8 @@ export default async function PublicationDetailPage({ params }: { params: Promis
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Acciones rápidas</CardTitle>
-              <CardDescription>Aprueba, solicita cambios o vuelve a intentar la tarea cuando haga falta.</CardDescription>
+              <CardTitle>Quick actions</CardTitle>
+              <CardDescription>Approve, request changes or retry the task when needed.</CardDescription>
             </CardHeader>
             <CardContent>
               <ApprovalActions publicationId={publication.id} />
@@ -98,7 +98,7 @@ export default async function PublicationDetailPage({ params }: { params: Promis
 
           <Card>
             <CardHeader>
-              <CardTitle>Estado por canal</CardTitle>
+              <CardTitle>Status by channel</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {publication.attempts.map((attempt) => (

@@ -1,0 +1,37 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e199] [cursor=pointer]:
+    - img [ref=e200]
+  - alert [ref=e203]
+  - main [ref=e204]:
+    - generic [ref=e205]:
+      - generic [ref=e206]:
+        - paragraph [ref=e207]: Internal access
+        - heading "Social Automation Platform" [level=1] [ref=e208]
+        - paragraph [ref=e209]: Editorial control center to review drafts, approvals, traceability and publication idempotency before running external integrations.
+        - generic [ref=e210]:
+          - generic [ref=e211]:
+            - generic [ref=e212]:
+              - heading "Editor" [level=2] [ref=e213]
+              - paragraph [ref=e214]: Creates drafts and requests approval.
+            - generic [ref=e215]: editor@antigravity.local
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - heading "Approver" [level=2] [ref=e218]
+              - paragraph [ref=e219]: Approves, rejects and watches events.
+            - generic [ref=e220]: approver@antigravity.local
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - heading "Admin" [level=2] [ref=e223]
+              - paragraph [ref=e224]: Manages internal configuration.
+            - generic [ref=e225]: admin@antigravity.local
+      - generic [ref=e226]:
+        - generic [ref=e227]:
+          - heading "Sign in" [level=2] [ref=e228]
+          - paragraph [ref=e229]: Use a password of 8 or more characters to access the panel.
+        - generic [ref=e231]:
+          - combobox "Email" [ref=e232]
+          - textbox "Password" [ref=e233]:
+            - /placeholder: minimum 8 characters
+            - text: demo-access
+          - paragraph [ref=e234]: "Demo: pick an account from the menu and the password is already filled in. Just press Enter."
+          - button "Enter the panel" [ref=e235] [cursor=pointer]

@@ -22,7 +22,7 @@ export function ExecutionTimeline({ events }: { events: ExecutionEvent[] }) {
             <Badge variant={badgeMap[event.status]}>{event.status.replaceAll("_", " ")}</Badge>
           </div>
           <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
-            <span>{new Date(event.createdAt).toLocaleString("es-CO")}</span>
+            <span>{new Date(event.createdAt).toLocaleString("en-US")}</span>
             <span>{event.latencyMs} ms</span>
             <span>${event.estimatedCostUsd.toFixed(2)}</span>
           </div>

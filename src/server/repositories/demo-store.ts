@@ -103,7 +103,7 @@ export function createDemoPublication(input: CreatePublicationInput, normalizedU
     sourceUrl: input.sourceUrl,
     normalizedUrl,
     sourceType: input.sourceType,
-    title: "Pendiente de extracción de fuente",
+    title: "Pending source extraction",
     status: "draft",
     brand: input.brand,
     locale: input.locale,
@@ -130,7 +130,7 @@ export function createDemoPublication(input: CreatePublicationInput, normalizedU
         taskId: task.id,
         channel,
         status: "pending",
-        reviewer: "Pendiente",
+        reviewer: "Pending",
       });
     });
 
@@ -138,7 +138,7 @@ export function createDemoPublication(input: CreatePublicationInput, normalizedU
     taskId: task.id,
     stage: "ingest",
     status: "ok",
-    message: "Tarea creada desde el panel local y enviada a la orquestación.",
+    message: "Task created from the local panel and sent to orchestration.",
     latencyMs: 30,
     estimatedCostUsd: 0,
   });
@@ -161,7 +161,7 @@ export function requestDemoApproval(id: string, reviewer: string, note?: string)
     taskId: id,
     stage: "request-approval",
     status: "needs_approval",
-    message: note ?? `Aprobación solicitada por ${reviewer}.`,
+    message: note ?? `Approval requested by ${reviewer}.`,
     latencyMs: 42,
     estimatedCostUsd: 0,
   });
@@ -194,7 +194,7 @@ export function approveDemoPublication(id: string, reviewer: string, note?: stri
     taskId: id,
     stage: "approve",
     status: pending ? "needs_approval" : "ok",
-    message: pending ? "Aprobación parcial registrada." : "Todas las aprobaciones obligatorias fueron completadas.",
+    message: pending ? "Partial approval recorded." : "All required approvals were completed.",
     latencyMs: 55,
     estimatedCostUsd: 0,
   });
@@ -226,7 +226,7 @@ export function rejectDemoPublication(id: string, reviewer: string, note?: strin
     taskId: id,
     stage: "reject",
     status: "ok",
-    message: note ?? `Revisión solicitada por ${reviewer}.`,
+    message: note ?? `Revision requested by ${reviewer}.`,
     latencyMs: 60,
     estimatedCostUsd: 0,
   });
@@ -286,7 +286,7 @@ export function retryDemoPublication(id: string) {
     taskId: id,
     stage: "retry",
     status: "retryable_error",
-    message: "Reintento manual encolado conservando la misma llave de idempotencia.",
+    message: "Manual retry queued, preserving the same idempotency key.",
     latencyMs: 70,
     estimatedCostUsd: 0,
   });

@@ -1,0 +1,91 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - paragraph [ref=e7]: Editorial panel
+        - heading "Social Automation" [level=1] [ref=e8]
+      - generic [ref=e9]: Internal
+    - generic [ref=e10]:
+      - paragraph [ref=e11]: Workspace
+      - paragraph [ref=e12]: Manage drafts, approvals and publications from a single place.
+    - navigation [ref=e13]:
+      - link "Dashboard" [ref=e14] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e15]
+        - text: Dashboard
+      - link "New publication" [ref=e18] [cursor=pointer]:
+        - /url: /publications/new
+        - img [ref=e19]
+        - text: New publication
+      - link "Approvals" [ref=e22] [cursor=pointer]:
+        - /url: /approvals
+        - img [ref=e23]
+        - text: Approvals
+      - generic [ref=e26]:
+        - img [ref=e27]
+        - text: History
+      - link "Observability" [ref=e30] [cursor=pointer]:
+        - /url: /observability
+        - img [ref=e31]
+        - text: Observability
+      - link "Settings" [ref=e33] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e34]
+        - text: Settings
+    - generic [ref=e38]:
+      - paragraph [ref=e39]: Session
+      - paragraph [ref=e40]: approver@antigravity.local
+      - paragraph [ref=e41]: Approver
+      - button "Sign out" [ref=e43] [cursor=pointer]:
+        - img [ref=e44]
+        - text: Sign out
+  - main [ref=e47]:
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - paragraph [ref=e50]: Traceability
+        - heading "History and executions" [level=2] [ref=e51]
+      - generic [ref=e52]: Editorial operation
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - heading "Complete operational log" [level=2] [ref=e56]
+        - paragraph [ref=e57]: Each task keeps its status, cost, latency, final stage and access to detail.
+      - generic [ref=e59]:
+        - article [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - heading "How enterprise editorial teams can automate social publishing safely" [level=3] [ref=e63]
+              - paragraph [ref=e64]: https://example.com/insights/enterprise-social-ai
+            - generic [ref=e65]: approved
+          - generic [ref=e66]:
+            - generic [ref=e67]: linkedin
+            - generic [ref=e68]: facebook
+            - generic [ref=e69]: instagram
+            - generic [ref=e70]: x
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - generic [ref=e73]: Cost
+              - strong [ref=e74]: $3.42
+            - generic [ref=e75]:
+              - generic [ref=e76]: Last stage
+              - strong [ref=e77]: approval
+          - link "Open detail" [ref=e78] [cursor=pointer]:
+            - /url: /publications/task_001
+        - article [ref=e79]:
+          - generic [ref=e80]:
+            - generic [ref=e81]:
+              - heading "Automation governance for multi-channel marketing" [level=3] [ref=e82]
+              - paragraph [ref=e83]: https://www.youtube.com/watch?v=abc123
+            - generic [ref=e84]: published
+          - generic [ref=e85]:
+            - generic [ref=e86]: linkedin
+            - generic [ref=e87]: facebook
+            - generic [ref=e88]: instagram
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]: Cost
+              - strong [ref=e92]: $2.11
+            - generic [ref=e93]:
+              - generic [ref=e94]: Last stage
+              - strong [ref=e95]: publish-channel
+          - link "Open detail" [ref=e96] [cursor=pointer]:
+            - /url: /publications/task_002

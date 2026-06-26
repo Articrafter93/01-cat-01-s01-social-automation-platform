@@ -33,8 +33,8 @@ export function NewPublicationForm() {
       sourceUrl: String(formData.get("sourceUrl") ?? ""),
       sourceType: String(formData.get("sourceType") ?? "article"),
       brand: String(formData.get("brand") ?? "Antigravity"),
-      locale: String(formData.get("locale") ?? "es-CO"),
-      tone: String(formData.get("tone") ?? "Premium analítico"),
+      locale: String(formData.get("locale") ?? "en-US"),
+      tone: String(formData.get("tone") ?? "Analytical premium"),
       useAiImage: formData.get("useAiImage") === "on",
       requestedChannels,
     };
@@ -48,12 +48,12 @@ export function NewPublicationForm() {
     const result = await response.json();
 
     if (!response.ok) {
-      setMessage(result.error ?? "No se pudo crear la tarea.");
+      setMessage(result.error ?? "Could not create the task.");
       setBusy(false);
       return;
     }
 
-    setMessage("Tarea creada y enviada a ingest.");
+    setMessage("Task created and sent to ingest.");
     startTransition(() => {
       router.push(`/publications/${result.data.id}`);
       router.refresh();
@@ -63,37 +63,37 @@ export function NewPublicationForm() {
   return (
     <form action={handleSubmit} className="grid gap-6">
       <div className="grid gap-2">
-        <label className="text-sm font-medium">URL fuente</label>
+        <label className="text-sm font-medium">Source URL</label>
         <Input name="sourceUrl" placeholder="https://..." required />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="grid gap-2">
-          <label className="text-sm font-medium">Tipo de fuente</label>
+          <label className="text-sm font-medium">Source type</label>
           <Select name="sourceType" defaultValue="article">
-            <option value="article">Artículo / noticia</option>
+            <option value="article">Article / news</option>
             <option value="youtube">YouTube</option>
           </Select>
         </div>
         <div className="grid gap-2">
-          <label className="text-sm font-medium">Idioma</label>
-          <Input name="locale" defaultValue="es-CO" />
+          <label className="text-sm font-medium">Language</label>
+          <Input name="locale" defaultValue="en-US" />
         </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="grid gap-2">
-          <label className="text-sm font-medium">Marca</label>
+          <label className="text-sm font-medium">Brand</label>
           <Input name="brand" defaultValue="Antigravity" />
         </div>
         <div className="grid gap-2">
-          <label className="text-sm font-medium">Tono</label>
-          <Input name="tone" defaultValue="Premium analítico" />
+          <label className="text-sm font-medium">Tone</label>
+          <Input name="tone" defaultValue="Analytical premium" />
         </div>
       </div>
 
       <div className="grid gap-3">
-        <p className="text-sm font-medium">Canales destino</p>
+        <p className="text-sm font-medium">Target channels</p>
         <div className="grid gap-3 rounded-[24px] border border-border bg-background/60 p-4 md:grid-cols-3">
           {channels.map((channel) => (
             <label key={channel.value} className="flex items-center gap-3 text-sm">
@@ -112,28 +112,28 @@ export function NewPublicationForm() {
 
       <div className="flex items-center justify-between gap-4 rounded-[24px] border border-border bg-background/60 px-4 py-3">
         <div>
-          <p className="text-sm font-medium">Imagen IA opcional</p>
-          <p className="text-xs text-muted-foreground">Activa generación sólo si el canal y el asset lo justifican.</p>
+          <p className="text-sm font-medium">Optional AI image</p>
+          <p className="text-xs text-muted-foreground">Enable generation only if the channel and the asset justify it.</p>
         </div>
         <input type="checkbox" name="useAiImage" defaultChecked className="h-5 w-5 rounded border-border text-primary" />
       </div>
 
       <div className="grid gap-2">
-        <label className="text-sm font-medium">Notas editoriales</label>
-        <Textarea placeholder="Brief, restricciones de tono, CTA, campaña o exclusiones." />
+        <label className="text-sm font-medium">Editorial notes</label>
+        <Textarea placeholder="Brief, tone constraints, CTA, campaign or exclusions." />
       </div>
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={busy}>
-          {busy ? "Creando..." : "Crear tarea"}
+          {busy ? "Creating..." : "Create task"}
         </Button>
         {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
       </div>
 
       <p className="text-xs leading-6 text-muted-foreground">
-        Al crear esta tarea aceptas el tratamiento operativo de la URL y sus metadatos para orquestación,
-        aprobación y auditoría. Conservamos estos registros por el tiempo necesario para soporte y trazabilidad.
-        Consulta la <Link href="/privacidad" className="text-primary underline-offset-4 hover:underline">política de privacidad</Link>.
+        By creating this task you accept the operational processing of the URL and its metadata for orchestration,
+        approval and auditing. We keep these records for as long as needed for support and traceability.
+        See the <Link href="/privacy" className="text-primary underline-offset-4 hover:underline">privacy policy</Link>.
       </p>
     </form>
   );

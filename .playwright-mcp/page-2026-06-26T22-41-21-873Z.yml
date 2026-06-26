@@ -1,0 +1,113 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - paragraph [ref=e7]: Editorial panel
+          - heading "Social Automation" [level=1] [ref=e8]
+        - generic [ref=e9]: Internal
+      - generic [ref=e10]:
+        - paragraph [ref=e11]: Workspace
+        - paragraph [ref=e12]: Manage drafts, approvals and publications from a single place.
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "New publication" [ref=e18] [cursor=pointer]:
+          - /url: /publications/new
+          - img [ref=e19]
+          - text: New publication
+        - link "Approvals" [ref=e22] [cursor=pointer]:
+          - /url: /approvals
+          - img [ref=e23]
+          - text: Approvals
+        - link "History" [ref=e26] [cursor=pointer]:
+          - /url: /history
+          - img [ref=e27]
+          - text: History
+        - link "Observability" [ref=e30] [cursor=pointer]:
+          - /url: /observability
+          - img [ref=e31]
+          - text: Observability
+        - link "Settings" [ref=e33] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e34]
+          - text: Settings
+      - generic [ref=e38]:
+        - paragraph [ref=e39]: Session
+        - paragraph [ref=e40]: approver@antigravity.local
+        - paragraph [ref=e41]: Approver
+        - button "Sign out" [ref=e43] [cursor=pointer]:
+          - img [ref=e44]
+          - text: Sign out
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - paragraph [ref=e50]: Detail
+          - heading "Pending source extraction" [level=2] [ref=e51]
+        - generic [ref=e52]: Editorial operation
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e58]:
+              - generic [ref=e59]:
+                - heading "Operational summary" [level=2] [ref=e60]
+                - paragraph [ref=e61]: Overview of the task and its progress.
+              - generic [ref=e62]: needs approval
+            - generic [ref=e63]:
+              - generic [ref=e64]:
+                - paragraph [ref=e65]: Source
+                - paragraph [ref=e66]: https://example.com/insights/vfh-demo-article
+              - generic [ref=e67]:
+                - paragraph [ref=e68]: Last stage
+                - paragraph [ref=e69]: editorial-gate
+              - generic [ref=e70]:
+                - paragraph [ref=e71]: Channels
+                - generic [ref=e72]:
+                  - generic [ref=e73]: linkedin
+                  - generic [ref=e74]: facebook
+                  - generic [ref=e75]: instagram
+              - generic [ref=e76]:
+                - paragraph [ref=e77]: Estimated cost
+                - paragraph [ref=e78]: $0.00
+          - heading "Drafts by channel" [level=2] [ref=e81]
+          - generic [ref=e83]:
+            - heading "Execution timeline" [level=2] [ref=e85]
+            - list [ref=e87]:
+              - listitem [ref=e125]:
+                - generic [ref=e126]:
+                  - generic [ref=e127]:
+                    - paragraph [ref=e128]: request-approval
+                    - paragraph [ref=e129]: Editorial gate raised for direct publishing.
+                  - generic [ref=e130]: needs approval
+                - generic [ref=e131]:
+                  - generic [ref=e132]: 6/26/2026, 5:41:21 PM
+                  - generic [ref=e133]: 42 ms
+                  - generic [ref=e134]: $0.00
+              - listitem [ref=e88]:
+                - generic [ref=e89]:
+                  - generic [ref=e90]:
+                    - paragraph [ref=e91]: ingest
+                    - paragraph [ref=e92]: Task created from the local panel and sent to orchestration.
+                  - generic [ref=e93]: ok
+                - generic [ref=e94]:
+                  - generic [ref=e95]: 6/26/2026, 5:36:13 PM
+                  - generic [ref=e96]: 30 ms
+                  - generic [ref=e97]: $0.00
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - heading "Quick actions" [level=2] [ref=e101]
+              - paragraph [ref=e102]: Approve, request changes or retry the task when needed.
+            - generic [ref=e104]:
+              - textbox "Reviewer" [ref=e105]: Laura Ops
+              - generic [ref=e106]:
+                - button "Approve" [ref=e107] [cursor=pointer]
+                - button "Gate" [ref=e108] [cursor=pointer]
+                - button "Reject" [ref=e109] [cursor=pointer]
+                - button "Retry" [ref=e110] [cursor=pointer]
+          - heading "Status by channel" [level=2] [ref=e113]
+  - button "Open Next.js Dev Tools" [ref=e120] [cursor=pointer]:
+    - img [ref=e121]
+  - alert [ref=e124]

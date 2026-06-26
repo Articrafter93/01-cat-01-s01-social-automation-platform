@@ -166,7 +166,7 @@ function mapApproval(row: ApprovalDecisionRow): ApprovalDecision {
     taskId: row.task_id,
     channel: row.channel,
     status: row.status,
-    reviewer: row.reviewer_name ?? "Pendiente",
+    reviewer: row.reviewer_name ?? "Pending",
     reviewedAt: row.reviewed_at ?? undefined,
     note: row.note ?? undefined,
   };
@@ -317,7 +317,7 @@ export async function createPublication(input: unknown) {
       source_url: parsed.sourceUrl,
       normalized_url: safeSource.toString().toLowerCase(),
       source_type: parsed.sourceType,
-      title: "Pendiente de extracción de fuente",
+      title: "Pending source extraction",
       status: "draft",
       brand: parsed.brand,
       locale: parsed.locale,
@@ -353,7 +353,7 @@ export async function createPublication(input: unknown) {
     task_id: typedTask.id,
     stage: "ingest",
     status: "ok",
-    message: "Tarea creada desde el panel y enviada a la orquestación.",
+    message: "Task created from the panel and sent to orchestration.",
     latency_ms: 30,
     estimated_cost_usd: 0,
   });
@@ -390,7 +390,7 @@ export async function requestApproval(id: string, reviewer: string, note?: strin
     task_id: id,
     stage: "request-approval",
     status: "needs_approval",
-    message: note ?? `Aprobación solicitada por ${reviewer}.`,
+    message: note ?? `Approval requested by ${reviewer}.`,
     latency_ms: 42,
     estimated_cost_usd: 0,
   });
@@ -445,7 +445,7 @@ export async function approvePublication(id: string, reviewer: string, note?: st
     task_id: id,
     stage: "approve",
     status: pending ? "needs_approval" : "ok",
-    message: pending ? "Aprobación parcial registrada." : "Todas las aprobaciones obligatorias fueron completadas.",
+    message: pending ? "Partial approval recorded." : "All required approvals were completed.",
     latency_ms: 55,
     estimated_cost_usd: 0,
   });
@@ -496,7 +496,7 @@ export async function rejectPublication(id: string, reviewer: string, note?: str
     task_id: id,
     stage: "reject",
     status: "ok",
-    message: note ?? `Revisión solicitada por ${reviewer}.`,
+    message: note ?? `Revision requested by ${reviewer}.`,
     latency_ms: 60,
     estimated_cost_usd: 0,
   });

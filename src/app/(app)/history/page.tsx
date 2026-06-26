@@ -11,11 +11,11 @@ export default async function HistoryPage() {
   const tasks = await listPublications();
 
   return (
-    <AppShell currentPath="/history" eyebrow="Trazabilidad" title="Historial y ejecuciones">
+    <AppShell currentPath="/history" eyebrow="Traceability" title="History and executions">
       <Card>
         <CardHeader>
-          <CardTitle>Registro operativo completo</CardTitle>
-          <CardDescription>Cada tarea conserva estado, costo, latencia, stage final y acceso a detalle.</CardDescription>
+          <CardTitle>Complete operational log</CardTitle>
+          <CardDescription>Each task keeps its status, cost, latency, final stage and access to detail.</CardDescription>
         </CardHeader>
         <CardContent>
           <PublicationTable tasks={tasks} />

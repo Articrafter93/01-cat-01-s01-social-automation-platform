@@ -1,0 +1,208 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - paragraph [ref=e7]: Editorial panel
+          - heading "Social Automation" [level=1] [ref=e8]
+        - generic [ref=e9]: Internal
+      - generic [ref=e10]:
+        - paragraph [ref=e11]: Workspace
+        - paragraph [ref=e12]: Manage drafts, approvals and publications from a single place.
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e15]
+          - text: Dashboard
+        - link "New publication" [ref=e18] [cursor=pointer]:
+          - /url: /publications/new
+          - img [ref=e19]
+          - text: New publication
+        - link "Approvals" [ref=e22] [cursor=pointer]:
+          - /url: /approvals
+          - img [ref=e23]
+          - text: Approvals
+        - link "History" [ref=e26] [cursor=pointer]:
+          - /url: /history
+          - img [ref=e27]
+          - text: History
+        - link "Observability" [ref=e30] [cursor=pointer]:
+          - /url: /observability
+          - img [ref=e31]
+          - text: Observability
+        - link "Settings" [ref=e33] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e34]
+          - text: Settings
+      - generic [ref=e38]:
+        - paragraph [ref=e39]: Session
+        - paragraph [ref=e40]: approver@antigravity.local
+        - paragraph [ref=e41]: Approver
+        - button "Sign out" [ref=e43] [cursor=pointer]:
+          - img [ref=e44]
+          - text: Sign out
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - paragraph [ref=e50]: Detail
+          - heading "How enterprise editorial teams can automate social publishing safely" [level=2] [ref=e51]
+        - generic [ref=e52]: Editorial operation
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e58]:
+              - generic [ref=e59]:
+                - heading "Operational summary" [level=2] [ref=e60]
+                - paragraph [ref=e61]: Overview of the task and its progress.
+              - generic [ref=e62]: draft
+            - generic [ref=e63]:
+              - generic [ref=e64]:
+                - paragraph [ref=e65]: Source
+                - paragraph [ref=e66]: https://example.com/insights/enterprise-social-ai
+              - generic [ref=e67]:
+                - paragraph [ref=e68]: Last stage
+                - paragraph [ref=e69]: revision
+              - generic [ref=e70]:
+                - paragraph [ref=e71]: Channels
+                - generic [ref=e72]:
+                  - generic [ref=e73]: linkedin
+                  - generic [ref=e74]: facebook
+                  - generic [ref=e75]: instagram
+                  - generic [ref=e76]: x
+              - generic [ref=e77]:
+                - paragraph [ref=e78]: Estimated cost
+                - paragraph [ref=e79]: $3.42
+          - generic [ref=e80]:
+            - heading "Drafts by channel" [level=2] [ref=e82]
+            - generic [ref=e83]:
+              - generic [ref=e84]:
+                - generic [ref=e85]:
+                  - generic [ref=e86]: facebook
+                  - generic [ref=e87]: 104 chars · rev 2
+                - paragraph [ref=e88]: From a fragile flow to a reliable operation
+                - paragraph [ref=e89]: The point isn't to publish more, but to publish with control, evidence and zero duplicates across channels.
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - generic [ref=e92]: instagram
+                  - generic [ref=e93]: 92 chars · rev 1
+                - paragraph [ref=e94]: A serious editorial system
+                - paragraph [ref=e95]: Modular automation, upfront approval and real observability for every publication.
+              - generic [ref=e96]:
+                - generic [ref=e97]:
+                  - generic [ref=e98]: linkedin
+                  - generic [ref=e99]: 138 chars · rev 2
+                - paragraph [ref=e100]: Automating social shouldn't feel like operational roulette
+                - paragraph [ref=e101]: We turn a scraping + AI + publishing chain into a traceable system, with approval and real per-channel controls.
+          - generic [ref=e102]:
+            - heading "Execution timeline" [level=2] [ref=e104]
+            - list [ref=e106]:
+              - listitem [ref=e107]:
+                - generic [ref=e108]:
+                  - generic [ref=e109]:
+                    - paragraph [ref=e110]: reject
+                    - paragraph [ref=e111]: Request tone and CTA adjustments.
+                  - generic [ref=e112]: ok
+                - generic [ref=e113]:
+                  - generic [ref=e114]: 6/26/2026, 4:59:51 PM
+                  - generic [ref=e115]: 60 ms
+                  - generic [ref=e116]: $0.00
+              - listitem [ref=e117]:
+                - generic [ref=e118]:
+                  - generic [ref=e119]:
+                    - paragraph [ref=e120]: reject
+                    - paragraph [ref=e121]: Request tone and CTA adjustments.
+                  - generic [ref=e122]: ok
+                - generic [ref=e123]:
+                  - generic [ref=e124]: 6/26/2026, 4:59:30 PM
+                  - generic [ref=e125]: 60 ms
+                  - generic [ref=e126]: $0.00
+              - listitem [ref=e127]:
+                - generic [ref=e128]:
+                  - generic [ref=e129]:
+                    - paragraph [ref=e130]: reject
+                    - paragraph [ref=e131]: Request tone and CTA adjustments.
+                  - generic [ref=e132]: ok
+                - generic [ref=e133]:
+                  - generic [ref=e134]: 6/26/2026, 4:59:14 PM
+                  - generic [ref=e135]: 60 ms
+                  - generic [ref=e136]: $0.00
+              - listitem [ref=e137]:
+                - generic [ref=e138]:
+                  - generic [ref=e139]:
+                    - paragraph [ref=e140]: request-approval
+                    - paragraph [ref=e141]: Editorial gate raised for direct publishing.
+                  - generic [ref=e142]: needs approval
+                - generic [ref=e143]:
+                  - generic [ref=e144]: 6/26/2026, 4:59:12 PM
+                  - generic [ref=e145]: 42 ms
+                  - generic [ref=e146]: $0.00
+              - listitem [ref=e147]:
+                - generic [ref=e148]:
+                  - generic [ref=e149]:
+                    - paragraph [ref=e150]: request-approval
+                    - paragraph [ref=e151]: Editorial gate raised for direct publishing.
+                  - generic [ref=e152]: needs approval
+                - generic [ref=e153]:
+                  - generic [ref=e154]: 6/26/2026, 4:57:57 PM
+                  - generic [ref=e155]: 42 ms
+                  - generic [ref=e156]: $0.00
+              - listitem [ref=e157]:
+                - generic [ref=e158]:
+                  - generic [ref=e159]:
+                    - paragraph [ref=e160]: approve
+                    - paragraph [ref=e161]: All required approvals were completed.
+                  - generic [ref=e162]: ok
+                - generic [ref=e163]:
+                  - generic [ref=e164]: 6/26/2026, 4:51:52 PM
+                  - generic [ref=e165]: 55 ms
+                  - generic [ref=e166]: $0.00
+              - listitem [ref=e167]:
+                - generic [ref=e168]:
+                  - generic [ref=e169]:
+                    - paragraph [ref=e170]: generate-social-copy
+                    - paragraph [ref=e171]: Drafts generated for 4 channels; editorial gate raised for direct channels.
+                  - generic [ref=e172]: needs approval
+                - generic [ref=e173]:
+                  - generic [ref=e174]: 6/26/2026, 4:39:47 PM
+                  - generic [ref=e175]: 4020 ms
+                  - generic [ref=e176]: $1.91
+              - listitem [ref=e177]:
+                - generic [ref=e178]:
+                  - generic [ref=e179]:
+                    - paragraph [ref=e180]: extract-article
+                    - paragraph [ref=e181]: Readable article extracted with sanitizer and HTML parser.
+                  - generic [ref=e182]: ok
+                - generic [ref=e183]:
+                  - generic [ref=e184]: 6/26/2026, 4:20:47 PM
+                  - generic [ref=e185]: 1244 ms
+                  - generic [ref=e186]: $0.02
+              - listitem [ref=e187]:
+                - generic [ref=e188]:
+                  - generic [ref=e189]:
+                    - paragraph [ref=e190]: fetch-source
+                    - paragraph [ref=e191]: Source fetched and validated against the scrape allowlist.
+                  - generic [ref=e192]: ok
+                - generic [ref=e193]:
+                  - generic [ref=e194]: 6/26/2026, 4:18:47 PM
+                  - generic [ref=e195]: 741 ms
+                  - generic [ref=e196]: $0.00
+        - generic [ref=e197]:
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - heading "Quick actions" [level=2] [ref=e200]
+              - paragraph [ref=e201]: Approve, request changes or retry the task when needed.
+            - generic [ref=e203]:
+              - textbox "Reviewer" [ref=e204]: Laura Ops
+              - generic [ref=e205]:
+                - button "Approve" [ref=e206] [cursor=pointer]
+                - button "Gate" [ref=e207] [cursor=pointer]
+                - button "Reject" [ref=e208] [cursor=pointer]
+                - button "Retry" [ref=e209] [cursor=pointer]
+          - generic [ref=e210]:
+            - heading "Status by channel" [level=2] [ref=e212]
+            - generic [ref=e214]:
+              - paragraph [ref=e215]: facebook
+              - paragraph [ref=e216]: draft
+  - button "Open Next.js Dev Tools" [ref=e222] [cursor=pointer]:
+    - img [ref=e223]
+  - alert [ref=e226]
