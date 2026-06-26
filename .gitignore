@@ -9,3 +9,8 @@ prisma/dev.db-journal
 tmp/
 *.tsbuildinfo
 .claude/settings.local.json
+
+# Transient Playwright MCP artifacts (page snapshots / console logs)
+.playwright-mcp/
+# Loose screenshots at repo root — VFH evidence lives under reports/vfh/
+/*.png

@@ -38,10 +38,11 @@ Objetivo: dejar el proyecto listo para auditoria local (`audit-ready sandbox`) s
 5. Validaciones tecnicas locales previas a `audit` y `vuln`.
 
 ## Riesgos y bloqueos actuales
-- `WF-011 PASS` bloqueado hasta provisionar Supabase sandbox.
-- Pasada funcional UI completa bloqueada hasta contar con datos reales sandbox.
-- `INSPECCION-VISUAL.md` bloqueado hasta poder verificar la UI conectada al sandbox.
-- Integracion real n8n bloqueada por ausencia de export productivo.
+> Reconciliado con la **Nota de Cambio 02** (2026-06-24, re-alcance a fallback-local audit-ready). El estado autoritativo vive en `00-ARQUITECTURA-PROYECTO.md`.
+- `WF-011`: **`PASS`** para el alcance fallback-local audit-ready (Nota de Cambio 02). La re-ejecucion con **persistencia real Supabase** queda diferida a fase posterior (`get-real`/sandbox).
+- Pasada funcional UI: **ejecutada** contra el fallback-local (VFH 2026-06-26, sello parcial vigente). La validacion con datos reales sandbox queda diferida a la fase real.
+- `INSPECCION-VISUAL.md`: **`Resultado: SI`** (render + pasada de interaccion 2026-06-26) sobre el fallback-local.
+- Integracion real n8n: diferida por ausencia de export productivo (documentada con scoping honesto en el README).
 
 ## Criterio de salida de esta fase
 - Artefactos fundacionales canonicos completos.
