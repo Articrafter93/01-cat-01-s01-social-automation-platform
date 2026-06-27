@@ -14,3 +14,4 @@ tmp/
 .playwright-mcp/
 # Loose screenshots at repo root — VFH evidence lives under reports/vfh/
 /*.png
+.vercel

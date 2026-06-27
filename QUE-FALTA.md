@@ -1,7 +1,7 @@
 # QUE-FALTA
 
-Playbook phase: GATE 9 completo — revision-final PR_APPROVED, EXITO TOTAL, APTO_PORTAFOLIO; pendiente VFH + sello parcial
-Next action: DEVELOPER confirma §6 en vivo (VFH) → emisión automática de SELLO DE APROBACION PARCIAL.md
+Playbook phase: SELLO PARCIAL vigente (2026-06-26). En ruta de SELLO FINAL (vrc): proyecto vinculado a Vercel, auth de exhibición habilitada por opt-in. BLOQUEADO en env vars manuales.
+Next action: DEVELOPER configura env vars en Vercel (DATA_SOURCE_MODE=local, NEXT_PUBLIC_DEMO_AUTH=enabled, AUTH_SECRET) en Production+Preview → avisa → agente retoma preview deploy + alias + 2ª VFH → vrc emite SELLO FINAL.
 
 ## Estado actual
 - [x] Artefactos fundacionales alineados a regularizacion sandbox.
@@ -48,6 +48,10 @@ Next action: DEVELOPER confirma §6 en vivo (VFH) → emisión automática de SE
 - 2026-06-24: `vuln` (Opus) PASA. SCA: 8→0 vulnerabilidades vía Dependency Change Gate (next 15.5.15→15.5.19, sanitize-html→^2.17.5, postcss→^8.5.10, overrides postcss/esbuild). SAST HIGH corregidos: (1) identidad del revisor ahora derivada de la sesion autenticada (`src/server/auth/reviewer.ts`), ya no del body del cliente — audit trail no falsificable; (2) `url-policy.ts` endurecido contra SSRF (metadata cloud 169.254/IPv6/0.0.0.0/IPs codificadas) con cobertura de tests. WARNING de fuga de errores resuelto con `DomainError` (genérico+log para errores inesperados). typecheck/lint/test(17)/build verdes. Rutas stale de scripts de seguridad en package.json corregidas (procedimientos→ops).
 - 2026-06-24 (sesión previa a 2026-06-25): `revision-final` 2ª pasada delta (Opus 4.8/High) = `PR_APPROVED`. `cliente-exigente` Modo B = `EXITO TOTAL`. Residuo `middleware.ts` raíz eliminado por developer. Archivos en estado untracked al iniciar sesión 2026-06-25.
 - 2026-06-25: `reclutador-exigente` (Sonnet 4.6): `APTO_PORTAFOLIO`. QUE-FALTA.md reconciliado. Pendiente: VFH + sello parcial.
+- 2026-06-26: VFH local `SI` ("la apruebo, sigamos") + `SELLO DE APROBACION PARCIAL.md` emitido (vigente).
+- 2026-06-27: `busca-el-sello-final` (Opus 4.8). Preflight `vrc` OK (GATE9 delta `PR_APPROVED`/`WF-011 PASS`, parcial vigente, GitHub sync, text-scan PASA). `.vercelignore` añadido (PR #3). Proyecto vinculado a Vercel (`articrafter93s-projects/...`). **BLOQUEADOR encontrado:** `auth.config.ts:38` bloqueaba todo login en `NODE_ENV=production` → exhibición inaccesible para reclutadores. Resuelto (autorizado por developer, asesor ALLOW) con opt-in explícito: demo auth solo con `NEXT_PUBLIC_DEMO_AUTH=enabled`/`DATA_SOURCE_MODE=local`; real-prod sigue sin mock login (PR #4). typecheck/lint/23 tests/build verdes. **BLOQUEADO en env vars:** `vercel env add` está deny-ruleado (`Bash(vercel env:*)`); el developer debe setear `DATA_SOURCE_MODE=local`, `NEXT_PUBLIC_DEMO_AUTH=enabled`, `AUTH_SECRET` en Production+Preview vía dashboard antes de retomar el preview deploy.
+- PENDIENTE doble prueba del cambio de auth (opt-in de demo login): verificable behavioralmente en el deploy (login demo funciona en exhibición, bloqueado sin flag). Documentar al cerrar.
+- NOTA drift: `CHECKLIST-CONTROL.md` quedó stale (dice `WF-011 NO_EJECUTADO`); autoridad vigente = GATE9 delta `PASS`. Reconciliar.
 
 
 
