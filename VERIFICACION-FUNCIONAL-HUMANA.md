@@ -45,7 +45,33 @@
 
 ## Verificacion para SELLO FINAL (URL desplegada — la emite `vrc`)
 
-- **Estado:** `PENDIENTE` (aun no desplegado)
+- **Fecha:** 2026-06-27
+- **Estado:** `CONFIRMADO`
+- **URL canonica:** https://01-cat-01-s01-automatizador-de-rede.vercel.app
+- **Deployment:** `dpl_F3J9iy56X5sYnnrqzKJ5Mze2FheZ` (`State: READY`) · commit `eb4e61e`
+- **Conducida por el agente en navegador (Playwright) sobre la URL real**, ejerciendo cada item con clic e aserción del resultado funcional.
+
+### Lista §6 ejercida en vivo sobre la URL desplegada (lente de reclutador)
+
+| # | Item | Resultado observado | Evidencia |
+|---|---|---|---|
+| 1 | URL publica accesible (sin muro Vercel) | HTTP 200, carga la app | trivial |
+| 2 | Login demo (admin) → dashboard | Entra, aterriza en su vista | trivial |
+| 3 | Dashboard con datos renderiza | Metricas + pipeline + eventos | `reports/vfh-final/01-dashboard-admin.png` |
+| 4 | **Crear publicacion → PERSISTE (detalle sin 404)** | Tarea creada abre su detalle; timeline `ingest` | `reports/vfh-final/04-create-persists-detail-ok.png` |
+| 5 | Aparece en History (coherencia entre vistas) | La tarea creada esta en History | `reports/vfh-final/05-history-shows-created-task.png` |
+| 6 | Cambio de estado persiste entre requests | `Gate` → `needs approval` sobrevive recarga; timeline acumula | `reports/vfh-final/06-gate-state-persisted.png` |
+| 7 | Logout → `/login` → re-login otro rol | Sign out OK; re-ingreso como editor | trivial |
+| 8 | Gating de rol bloquea con aviso visible | Editor en `/settings` → banner rojo "Access denied… Administrator role" | `reports/vfh-final/07-role-gating-denied-banner.png` |
+| 9 | Persistencia coherente entre roles/sesiones | Dashboard editor refleja tareas creadas (4 processed) | `reports/vfh-final/07-role-gating-denied-banner.png` |
+
+**Nota de remediacion:** la 2.ª VFH detecto el bug de persistencia serverless (el demo-store in-memory no sobrevivia entre invocaciones lambda → crear publicacion daba 404 y no aparecia en History). Resuelto con la capa de persistencia Upstash Redis (PR #6, key-prefix pooling sobre la unica DB free) y re-verificado end-to-end arriba.
+
+### Confirmacion del developer
+
+- **Frase literal del developer (copiada del chat):** "Confirmo, continúa."
+- **Confirmado por:** developer (Fabian Cubillos)
+- **Resultado VFH sobre URL desplegada:** `SI`
 
 ---
 

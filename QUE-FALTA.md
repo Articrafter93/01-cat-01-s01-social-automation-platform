@@ -1,7 +1,7 @@
 # QUE-FALTA
 
-Playbook phase: SELLO PARCIAL vigente (2026-06-26). En ruta de SELLO FINAL (vrc): proyecto vinculado a Vercel, auth de exhibición habilitada por opt-in. BLOQUEADO en env vars manuales.
-Next action: DEVELOPER configura env vars en Vercel (DATA_SOURCE_MODE=local, NEXT_PUBLIC_DEMO_AUTH=enabled, AUTH_SECRET) en Production+Preview → avisa → agente retoma preview deploy + alias + 2ª VFH → vrc emite SELLO FINAL.
+Playbook phase: **SELLO FINAL EMITIDO Y VIGENTE** (2026-06-27). Deploy prod público en Vercel + persistencia Upstash Redis verificada end-to-end + 2ª VFH confirmada por el developer. Proyecto cerrado (exhibición de portafolio).
+Next action: Ninguna bloqueante. Pendientes no-bloqueantes: (1) rotar key de Resend expuesta; (2) confirmar deny rule `vercel env` restaurada; (3) integrar Upstash como capacidad global vía MCP (gobernanza Polimatus, post-restart); (4) doble prueba del auth opt-in. Opcional: add-to-portfolio.
 
 ## Estado actual
 - [x] Artefactos fundacionales alineados a regularizacion sandbox.
