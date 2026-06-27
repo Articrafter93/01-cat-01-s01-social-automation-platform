@@ -35,7 +35,15 @@ export const authConfig = {
           return null;
         }
 
-        if (process.env.NODE_ENV === "production") {
+        // Sandbox demo auth is blocked in production by default so a real
+        // production deploy never ships a live mock login. It is re-enabled
+        // ONLY when explicitly opted in for the sandbox exhibition (no real
+        // data: fallback-local store). The opt-in is deliberate per deploy.
+        const demoAuthEnabled =
+          process.env.NEXT_PUBLIC_DEMO_AUTH === "enabled" ||
+          process.env.DATA_SOURCE_MODE === "local";
+
+        if (process.env.NODE_ENV === "production" && !demoAuthEnabled) {
           return null;
         }
 
