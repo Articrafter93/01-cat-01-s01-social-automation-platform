@@ -321,6 +321,49 @@ export const executionEvents = store.executionEvents;
 export const promptTemplates = store.promptTemplates;
 export const integrationBindings = store.integrationBindings;
 
+export type StoreSnapshot = Store;
+
+/**
+ * Shallow snapshot of every collection. Used by the persistence layer to write
+ * the whole demo state to Redis as a single JSON blob (serverless-safe), since
+ * `globalThis` does not survive across separate serverless invocations.
+ */
+export function snapshotStore(): StoreSnapshot {
+  return {
+    publicationTasks: [...publicationTasks],
+    sourceAssets: [...sourceAssets],
+    channelDrafts: [...channelDrafts],
+    approvals: [...approvals],
+    publishAttempts: [...publishAttempts],
+    executionEvents: [...executionEvents],
+    promptTemplates: [...promptTemplates],
+    integrationBindings: [...integrationBindings],
+  };
+}
+
+/**
+ * Replace the contents of every exported collection in place, so the references
+ * held by the demo repository keep pointing at the same arrays after hydration.
+ */
+export function hydrateStore(snapshot: Partial<StoreSnapshot>) {
+  const apply = <T>(target: T[], next?: T[]) => {
+    if (!next) {
+      return;
+    }
+    target.length = 0;
+    target.push(...next);
+  };
+
+  apply(publicationTasks, snapshot.publicationTasks);
+  apply(sourceAssets, snapshot.sourceAssets);
+  apply(channelDrafts, snapshot.channelDrafts);
+  apply(approvals, snapshot.approvals);
+  apply(publishAttempts, snapshot.publishAttempts);
+  apply(executionEvents, snapshot.executionEvents);
+  apply(promptTemplates, snapshot.promptTemplates);
+  apply(integrationBindings, snapshot.integrationBindings);
+}
+
 export function computeDashboardMetrics(): DashboardMetrics {
   const processed = publicationTasks.length;
   const pending = publicationTasks.filter((task) => ["draft", "processing", "needs_approval"].includes(task.status)).length;
