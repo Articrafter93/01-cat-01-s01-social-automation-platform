@@ -20,6 +20,7 @@ import {
   publishAttempts,
   sourceAssets,
 } from "@/server/repositories/in-memory-store";
+import { loadState, saveState } from "@/server/repositories/persistence";
 
 const directChannels: Channel[] = ["linkedin", "facebook", "instagram"];
 
@@ -68,13 +69,15 @@ function withTaskRelations(task: PublicationTask) {
   };
 }
 
-export function listDemoPublications() {
+export async function listDemoPublications() {
+  await loadState();
   return [...publicationTasks]
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
     .map(withTaskRelations);
 }
 
-export function getDemoPublicationById(id: string) {
+export async function getDemoPublicationById(id: string) {
+  await loadState();
   const task = findTask(id);
   if (!task) {
     return null;
@@ -95,7 +98,8 @@ export function getDemoPublicationById(id: string) {
   };
 }
 
-export function createDemoPublication(input: CreatePublicationInput, normalizedUrl: string) {
+export async function createDemoPublication(input: CreatePublicationInput, normalizedUrl: string) {
+  await loadState();
   const timestamp = new Date().toISOString();
   const task: PublicationTask = {
     id: buildId("task"),
@@ -143,10 +147,12 @@ export function createDemoPublication(input: CreatePublicationInput, normalizedU
     estimatedCostUsd: 0,
   });
 
+  await saveState();
   return task;
 }
 
-export function requestDemoApproval(id: string, reviewer: string, note?: string) {
+export async function requestDemoApproval(id: string, reviewer: string, note?: string) {
+  await loadState();
   const task = findTask(id);
   if (!task) {
     return null;
@@ -166,10 +172,12 @@ export function requestDemoApproval(id: string, reviewer: string, note?: string)
     estimatedCostUsd: 0,
   });
 
+  await saveState();
   return task;
 }
 
-export function approveDemoPublication(id: string, reviewer: string, note?: string, channel?: Channel) {
+export async function approveDemoPublication(id: string, reviewer: string, note?: string, channel?: Channel) {
+  await loadState();
   const task = findTask(id);
   if (!task) {
     return null;
@@ -199,10 +207,12 @@ export function approveDemoPublication(id: string, reviewer: string, note?: stri
     estimatedCostUsd: 0,
   });
 
+  await saveState();
   return task;
 }
 
-export function rejectDemoPublication(id: string, reviewer: string, note?: string, channel?: Channel) {
+export async function rejectDemoPublication(id: string, reviewer: string, note?: string, channel?: Channel) {
+  await loadState();
   const task = findTask(id);
   if (!task) {
     return null;
@@ -231,10 +241,12 @@ export function rejectDemoPublication(id: string, reviewer: string, note?: strin
     estimatedCostUsd: 0,
   });
 
+  await saveState();
   return task;
 }
 
-export function retryDemoPublication(id: string) {
+export async function retryDemoPublication(id: string) {
+  await loadState();
   const task = findTask(id);
   if (!task) {
     return null;
@@ -291,39 +303,50 @@ export function retryDemoPublication(id: string) {
     estimatedCostUsd: 0,
   });
 
+  await saveState();
   return task;
 }
 
-export function listDemoDrafts(taskId: string): ChannelDraft[] {
+export async function listDemoDrafts(taskId: string): Promise<ChannelDraft[]> {
+  await loadState();
   return channelDrafts.filter((draft) => draft.taskId === taskId).sort((a, b) => a.channel.localeCompare(b.channel));
 }
 
-export function listDemoApprovals(taskId: string): ApprovalDecision[] {
+export async function listDemoApprovals(taskId: string): Promise<ApprovalDecision[]> {
+  await loadState();
   return approvals.filter((approval) => approval.taskId === taskId);
 }
 
-export function listDemoExecutions() {
+export async function listDemoExecutions() {
+  await loadState();
   return [...executionEvents].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 }
 
-export function getDemoDashboardData() {
+export async function getDemoDashboardData() {
+  await loadState();
   const tasksByStatus = publicationTasks.reduce<Record<string, number>>((acc, task) => {
     acc[task.status] = (acc[task.status] ?? 0) + 1;
     return acc;
   }, {});
 
+  const recentEvents = [...executionEvents]
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    .slice(0, 6);
+
   return {
     metrics: computeDashboardMetrics(),
     tasksByStatus,
-    recentEvents: listDemoExecutions().slice(0, 6),
+    recentEvents,
   };
 }
 
-export function listDemoPrompts(): PromptTemplate[] {
+export async function listDemoPrompts(): Promise<PromptTemplate[]> {
+  await loadState();
   return [...promptTemplates].sort((a, b) => `${a.brand}:${a.channel}:${b.version}`.localeCompare(`${b.brand}:${b.channel}:${a.version}`));
 }
 
-export function updateDemoPrompt(id: string, input: PromptUpdateInput) {
+export async function updateDemoPrompt(id: string, input: PromptUpdateInput) {
+  await loadState();
   const prompt = promptTemplates.find((entry) => entry.id === id);
   if (!prompt) {
     return null;
@@ -341,9 +364,11 @@ export function updateDemoPrompt(id: string, input: PromptUpdateInput) {
     prompt.locale = input.locale;
   }
 
+  await saveState();
   return prompt;
 }
 
-export function listDemoIntegrations(): IntegrationBinding[] {
+export async function listDemoIntegrations(): Promise<IntegrationBinding[]> {
+  await loadState();
   return [...integrationBindings].sort((a, b) => a.provider.localeCompare(b.provider));
 }
