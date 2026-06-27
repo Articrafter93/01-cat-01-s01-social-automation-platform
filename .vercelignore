@@ -1,0 +1,21 @@
+# Node build artifacts
+node_modules/
+.next/cache/
+coverage/
+
+# Internal process scaffolding (never recruiter-facing in deploy)
+comunicacion-cliente/
+comunicacion-clientes/
+docs/
+reports/
+runbooks/
+policies/
+n8n/
+
+# Project control artifacts
+*.log
+.env*
+.git/
+.playwright-mcp/
+tmp/
+tests/
