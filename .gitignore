@@ -15,3 +15,30 @@ tmp/
 # Loose screenshots at repo root — VFH evidence lives under reports/vfh/
 /*.png
 .vercel
+
+# Internal process artifacts — excluded from the public portfolio repo (add-to-portfolio 8b)
+comunicacion-cliente/
+comunicacion-clientes/
+reports/
+docs/GATE9_Revision_Reporte.md
+docs/GATE9_Revision_Reporte_2_delta.md
+00-ARQUITECTURA-PROYECTO.md
+01-BRIEFING.md
+02-ARQUITECTURA-SITIO.md
+BRIEF.md
+CHECKLIST-CONTROL.md
+CLASIFICACION-ACTIVO.md
+DIRECCION-VISUAL.md
+GEMINI.md
+INSPECCION-VISUAL.md
+MATRIZ-BACKEND.md
+MOTION-STRATEGY.md
+PLAN.md
+QUE-FALTA.md
+REDO-TRACKING.md
+REVISION-RECLUTADOR.md
+LESSONS.md
+SEGOP.md
+SELLO DE APROBACION FINAL.md
+SELLO DE APROBACION PARCIAL.md
+VERIFICACION-FUNCIONAL-HUMANA.md
