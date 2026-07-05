@@ -4,8 +4,8 @@
 **Status:** Final approval seal active
 **Category:** CAT-01 — Operational Automations
 **Version:** commit `eb4e61e`
-**Public URL:** https://01-cat-01-s01-automatizador-de-rede.vercel.app
-**Repository:** https://github.com/Articrafter93/01-cat-01-s01-automatizador-de-redes-sociales-n8n
+**Public URL:** https://social-automation-platform.vercel.app
+**Repository:** https://github.com/Articrafter93/01-cat-01-s01-social-automation-platform
 
 ## Executive summary
 An editorial control center for a social-publishing automation pipeline. It turns a single source URL (article or YouTube) into multi-channel social drafts that move through an approval gate, an auditable execution timeline, and idempotent publishing — so a fragile scrape → AI → publish chain becomes a traceable, governed operation.
