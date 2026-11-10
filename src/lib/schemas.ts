@@ -49,13 +49,13 @@ export const workflowResultSchema = z.object({
       code: z.string(),
       message: z.string(),
       retriable: z.boolean(),
-      context: z.record(z.string()).optional(),
+      context: z.record(z.string(), z.string()).optional(),
     })
     .optional(),
 });
 
 export const publicationCreateSchema = z.object({
-  sourceUrl: z.string().url().refine(safeUrlRefinement, "URL protocol must be HTTP or HTTPS"),
+  sourceUrl: z.url().refine(safeUrlRefinement, "URL protocol must be HTTP or HTTPS"),
   sourceType: sourceTypeSchema,
   brand: z.string().min(2).max(80),
   locale: z.string().min(2).max(10),

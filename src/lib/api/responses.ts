@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod";
 import { DomainError } from "@/lib/api/errors";
 
 export function ok(data: unknown, init?: ResponseInit) {
@@ -12,7 +12,7 @@ export function fail(error: string, status = 400, details?: unknown) {
 
 export function handleRouteError(error: unknown) {
   if (error instanceof ZodError) {
-    return fail("Validation error", 422, error.flatten());
+    return fail("Validation error", 422, z.flattenError(error));
   }
 
   if (error instanceof DomainError) {

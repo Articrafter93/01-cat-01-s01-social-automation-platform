@@ -4,7 +4,7 @@ import { z } from "zod";
 import { resolveSandboxRole } from "@/server/auth/policy";
 
 const signInSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8),
 });
 
