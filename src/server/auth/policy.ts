@@ -1,25 +1,17 @@
+import { DEMO_ACCOUNTS, DEMO_PASSWORD, type DemoAccount } from "@/lib/demo-accounts";
 import type { UserRole } from "@/lib/types";
 
-const sandboxDomain = "@antigravity.local";
-
-export function resolveSandboxRole(email: string): UserRole {
+// Resolves a demo login to its account, or null. Only the listed demo accounts with the demo
+// password get in, and the role comes from the account itself: an email cannot pick its own role
+// by containing "admin", and an unknown email is rejected instead of becoming an editor.
+export function resolveDemoAccount(email: string, password: string): DemoAccount | null {
   const normalized = email.trim().toLowerCase();
-
-  if (!normalized.endsWith(sandboxDomain)) {
-    return "editor";
+  const account = DEMO_ACCOUNTS.find((candidate) => candidate.email === normalized);
+  if (!account || password !== DEMO_PASSWORD) {
+    return null;
   }
 
-  const [localPart] = normalized.split("@");
-
-  if (localPart.includes("admin")) {
-    return "admin";
-  }
-
-  if (localPart.includes("approver")) {
-    return "approver";
-  }
-
-  return "editor";
+  return account;
 }
 
 export function getRequiredRole(pathname: string, method = "GET"): UserRole | null {

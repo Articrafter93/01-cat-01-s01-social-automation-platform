@@ -57,9 +57,9 @@ export default async function ApprovalsPage() {
 
               <div className="rounded-[24px] border border-border bg-background/60 p-4">
                 <p className="text-sm font-semibold">Actions</p>
-                <p className="mt-1 text-sm text-muted-foreground">Approve, send back for changes or retry the task from here.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Approve or send the task back for changes from here.</p>
                 <div className="mt-4">
-                  <ApprovalActions publicationId={task.id} />
+                  <ApprovalActions publicationId={task.id} showRetry={false} />
                 </div>
               </div>
             </CardContent>

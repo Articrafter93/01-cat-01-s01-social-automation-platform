@@ -1,15 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { getRequiredRole, resolveSandboxRole } from "@/server/auth/policy";
+import { DEMO_PASSWORD } from "@/lib/demo-accounts";
+import { getRequiredRole, resolveDemoAccount } from "@/server/auth/policy";
 
-describe("resolveSandboxRole", () => {
-  it("maps sandbox identities to the expected role", () => {
-    expect(resolveSandboxRole("editor@antigravity.local")).toBe("editor");
-    expect(resolveSandboxRole("approver@antigravity.local")).toBe("approver");
-    expect(resolveSandboxRole("admin@antigravity.local")).toBe("admin");
+describe("resolveDemoAccount", () => {
+  it("signs in each demo account with the demo password and takes the role from the account", () => {
+    expect(resolveDemoAccount("editor@antigravity.local", DEMO_PASSWORD)?.role).toBe("editor");
+    expect(resolveDemoAccount("approver@antigravity.local", DEMO_PASSWORD)?.role).toBe("approver");
+    expect(resolveDemoAccount(" Admin@Antigravity.Local ", DEMO_PASSWORD)?.role).toBe("admin");
   });
 
-  it("falls back to editor for unknown domains", () => {
-    expect(resolveSandboxRole("someone@example.com")).toBe("editor");
+  it("rejects a demo account with any other password", () => {
+    expect(resolveDemoAccount("admin@antigravity.local", "any-other-password")).toBeNull();
+    expect(resolveDemoAccount("admin@antigravity.local", "")).toBeNull();
+  });
+
+  it("rejects emails that are not demo accounts, even if they contain a role name", () => {
+    for (const email of ["superadmin@antigravity.local", "admin2@antigravity.local", "admin@example.com", "someone@example.com"]) {
+      expect(resolveDemoAccount(email, DEMO_PASSWORD), email).toBeNull();
+    }
   });
 });
 

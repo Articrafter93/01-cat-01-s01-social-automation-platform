@@ -82,6 +82,30 @@ function seedStore(): Store {
         retries: 0,
       },
     },
+    {
+      // Seeded so the exhibition always has something the Retry button can act on: LinkedIn went
+      // out, Facebook failed with a temporary error, and both channels are approved.
+      id: "task_003",
+      correlationId: "corr_20260410_003",
+      sourceUrl: "https://example.com/insights/retry-ready-editorial-calendar",
+      normalizedUrl: "https://example.com/insights/retry-ready-editorial-calendar",
+      sourceType: "article",
+      title: "Planning an editorial calendar that survives a failed channel",
+      status: "partially_published",
+      brand: "Antigravity",
+      locale: "en-US",
+      tone: "Clear executive",
+      useAiImage: false,
+      requestedChannels: ["linkedin", "facebook"],
+      createdAt: new Date(now.getTime() - 1000 * 60 * 300).toISOString(),
+      updatedAt: new Date(now.getTime() - 1000 * 60 * 45).toISOString(),
+      lastRunStage: "publish-channel",
+      metrics: {
+        totalEstimatedCostUsd: 1.37,
+        totalLatencyMs: 9640,
+        retries: 0,
+      },
+    },
   ];
 
   const sourceAssets: SourceAsset[] = [
@@ -105,6 +129,18 @@ function seedStore(): Store {
       canonicalDate: "2026-04-08",
       title: "Automation governance for multi-channel marketing",
       transcriptStatus: "available",
+      extractionStatus: "ok",
+    },
+    {
+      id: "asset_003",
+      taskId: "task_003",
+      sourceType: "article",
+      normalizedUrl: "https://example.com/insights/retry-ready-editorial-calendar",
+      canonicalDate: "2026-04-10",
+      title: "Planning an editorial calendar that survives a failed channel",
+      author: "Editorial Ops Weekly",
+      summary: "How to keep a multi-channel calendar on track when one network fails, without publishing twice.",
+      transcriptStatus: "not_required",
       extractionStatus: "ok",
     },
   ];
@@ -144,6 +180,28 @@ function seedStore(): Store {
       approvedRevision: 1,
       validationWarnings: ["Add extended caption and curated hashtags."],
     },
+    {
+      id: "draft_004",
+      taskId: "task_003",
+      channel: "linkedin",
+      headline: "A calendar that bends instead of breaking",
+      body: "When one network fails, the rest of the plan should still ship, and the retry should never post twice.",
+      characterCount: 112,
+      requiresApproval: true,
+      approvedRevision: 1,
+      validationWarnings: [],
+    },
+    {
+      id: "draft_005",
+      taskId: "task_003",
+      channel: "facebook",
+      headline: "One failed channel, zero duplicates",
+      body: "Retry only what failed, keep the same idempotency key, and leave the published posts alone.",
+      characterCount: 98,
+      requiresApproval: true,
+      approvedRevision: 1,
+      validationWarnings: [],
+    },
   ];
 
   const approvals: ApprovalDecision[] = [
@@ -168,6 +226,22 @@ function seedStore(): Store {
       channel: "instagram",
       status: "pending",
       reviewer: "Pending",
+    },
+    {
+      id: "approval_004",
+      taskId: "task_003",
+      channel: "linkedin",
+      status: "approved",
+      reviewer: "Laura Ops",
+      reviewedAt: new Date(now.getTime() - 1000 * 60 * 120).toISOString(),
+    },
+    {
+      id: "approval_005",
+      taskId: "task_003",
+      channel: "facebook",
+      status: "approved",
+      reviewer: "Laura Ops",
+      reviewedAt: new Date(now.getTime() - 1000 * 60 * 120).toISOString(),
     },
   ];
 
@@ -201,6 +275,37 @@ function seedStore(): Store {
         approvedRevision: 2,
       }),
       status: "draft",
+    },
+    {
+      id: "publish_003",
+      taskId: "task_003",
+      channel: "linkedin",
+      accountId: "linkedin-main",
+      idempotencyKey: buildPublishIdempotencyKey({
+        normalizedUrl: "https://example.com/insights/retry-ready-editorial-calendar",
+        canonicalDate: "2026-04-10",
+        channel: "linkedin",
+        accountId: "linkedin-main",
+        approvedRevision: 1,
+      }),
+      status: "published",
+      publishedAt: new Date(now.getTime() - 1000 * 60 * 46).toISOString(),
+      externalPostId: "li_445566",
+    },
+    {
+      id: "publish_004",
+      taskId: "task_003",
+      channel: "facebook",
+      accountId: "facebook-main",
+      idempotencyKey: buildPublishIdempotencyKey({
+        normalizedUrl: "https://example.com/insights/retry-ready-editorial-calendar",
+        canonicalDate: "2026-04-10",
+        channel: "facebook",
+        accountId: "facebook-main",
+        approvedRevision: 1,
+      }),
+      status: "failed",
+      lastError: "Facebook API answered 503 (temporary outage). Safe to retry.",
     },
   ];
 
@@ -244,6 +349,16 @@ function seedStore(): Store {
       createdAt: new Date(now.getTime() - 1000 * 60 * 90).toISOString(),
       latencyMs: 5320,
       estimatedCostUsd: 0.18,
+    },
+    {
+      id: "event_005",
+      taskId: "task_003",
+      stage: "publish-channel",
+      status: "retryable_error",
+      message: "LinkedIn published. Facebook failed with a temporary error and can be retried.",
+      createdAt: new Date(now.getTime() - 1000 * 60 * 45).toISOString(),
+      latencyMs: 4110,
+      estimatedCostUsd: 0.12,
     },
   ];
 

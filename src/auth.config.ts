@@ -1,7 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import { resolveSandboxRole } from "@/server/auth/policy";
+import { hasSupabaseServerConfig } from "@/lib/supabase/config";
+import { resolveDemoAccount } from "@/server/auth/policy";
 
 const signInSchema = z.object({
   email: z.email(),
@@ -47,13 +48,23 @@ export const authConfig = {
           return null;
         }
 
-        const role = resolveSandboxRole(parsed.data.email);
+        // The demo accounts have a public password, so they must never reach real data: a
+        // production build with a Supabase backend configured has no demo login at all.
+        if (process.env.NODE_ENV === "production" && hasSupabaseServerConfig()) {
+          return null;
+        }
+
+        // Only the demo accounts with the demo password; the role comes from the account.
+        const account = resolveDemoAccount(parsed.data.email, parsed.data.password);
+        if (!account) {
+          return null;
+        }
 
         return {
-          id: `bootstrap-${role}`,
-          email: parsed.data.email,
+          id: `bootstrap-${account.role}`,
+          email: account.email,
           name: "Bootstrap User",
-          role,
+          role: account.role,
         };
       },
     }),
