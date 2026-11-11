@@ -9,9 +9,15 @@ import { Input } from "@/components/ui/input";
 export function ApprovalActions({
   publicationId,
   channel,
+  retryBlockedReason = null,
+  showRetry = true,
 }: {
   publicationId: string;
   channel?: Channel;
+  // Why the API would refuse a retry right now (lib/retry-policy.ts), or null if it is allowed.
+  retryBlockedReason?: string | null;
+  // Off where retry can never apply (the approvals inbox only lists tasks waiting for a decision).
+  showRetry?: boolean;
 }) {
   const router = useRouter();
   const [reviewer, setReviewer] = useState("Laura Ops");
@@ -67,10 +73,19 @@ export function ApprovalActions({
         <Button size="sm" variant="danger" onClick={() => submit("reject")} disabled={busyAction !== null}>
           Reject
         </Button>
-        <Button size="sm" variant="ghost" onClick={() => submit("retry")} disabled={busyAction !== null}>
-          Retry
-        </Button>
+        {showRetry ? (
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => submit("retry")}
+            disabled={busyAction !== null || retryBlockedReason !== null}
+            title={retryBlockedReason ?? undefined}
+          >
+            Retry
+          </Button>
+        ) : null}
       </div>
+      {showRetry && retryBlockedReason ? <p className="text-xs text-muted-foreground">Retry: {retryBlockedReason}</p> : null}
       {error ? (
         <p role="alert" className="text-sm font-medium text-danger">
           {error}

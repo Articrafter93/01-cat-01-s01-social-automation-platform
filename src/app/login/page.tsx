@@ -4,6 +4,7 @@ import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { DEMO_ACCOUNTS, DEMO_PASSWORD } from "@/lib/demo-accounts";
 
 type LoginPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -79,7 +80,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <Card className="flex flex-col justify-center">
           <CardHeader>
             <CardTitle>Sign in</CardTitle>
-            <CardDescription>Use a password of 8 or more characters to access the panel.</CardDescription>
+            <CardDescription>Sign in with one of the demo accounts and the demo password.</CardDescription>
           </CardHeader>
           <CardContent>
             <form action={loginAction} className="space-y-4">
@@ -94,18 +95,19 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 required
               />
               <datalist id="demo-accounts">
-                <option value="editor@antigravity.local">Editor — creates and requests approval</option>
-                <option value="approver@antigravity.local">Approver — approves and watches</option>
-                <option value="admin@antigravity.local">Admin — internal configuration</option>
+                {DEMO_ACCOUNTS.map((account) => (
+                  <option key={account.email} value={account.email}>
+                    {account.label}
+                  </option>
+                ))}
               </datalist>
               <Input
                 name="password"
                 type="password"
-                placeholder="minimum 8 characters"
+                placeholder="demo password"
                 aria-label="Password"
-                defaultValue="demo-access"
+                defaultValue={DEMO_PASSWORD}
                 required
-                minLength={8}
               />
               <p className="text-xs text-muted-foreground">
                 Demo: pick an account from the menu and the password is already filled in. Just press Enter.

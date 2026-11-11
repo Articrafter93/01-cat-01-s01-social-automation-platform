@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/app-shell";
 import { ApprovalActions } from "@/components/publications/approval-actions";
+import { retryBlockedReason } from "@/lib/retry-policy";
 import { ChannelChip } from "@/components/publications/channel-chip";
 import { ExecutionTimeline } from "@/components/publications/execution-timeline";
 import { StatusBadge } from "@/components/publications/status-badge";
@@ -92,7 +93,10 @@ export default async function PublicationDetailPage({ params }: { params: Promis
               <CardDescription>Approve, request changes or retry the task when needed.</CardDescription>
             </CardHeader>
             <CardContent>
-              <ApprovalActions publicationId={publication.id} />
+              <ApprovalActions
+                publicationId={publication.id}
+                retryBlockedReason={retryBlockedReason(publication)}
+              />
             </CardContent>
           </Card>
 

@@ -1,8 +1,27 @@
 import { publicationCreateSchema } from "@/lib/schemas";
 import { assertSafeSourceUrl } from "@/lib/security/url-policy";
 import { getSupabaseServerClient, hasSupabaseServerConfig } from "@/lib/supabase/server";
-import type { ApprovalDecision, Channel, ChannelDraft, ExecutionEvent, PublicationTask, PublishAttempt, SourceAsset } from "@/lib/types";
+import type {
+  ApprovalDecision,
+  Channel,
+  ChannelDraft,
+  ExecutionEvent,
+  PublicationStatus,
+  PublicationTask,
+  PublishAttempt,
+  SourceAsset,
+} from "@/lib/types";
+import { DomainError } from "@/lib/api/errors";
 import { buildPublishIdempotencyKey } from "@/lib/publishing/idempotency";
+import {
+  MAX_PUBLICATION_RETRIES,
+  NOTHING_TO_RETRY,
+  REQUEUEABLE_ATTEMPT_STATUSES,
+  planRetry,
+  retryEventMessage,
+  retryRefusal,
+  retryTargets,
+} from "@/lib/retry-policy";
 import {
   approveDemoPublication,
   createDemoPublication,
@@ -153,7 +172,8 @@ function mapDraft(row: ChannelDraftRow): ChannelDraft {
     headline: row.headline,
     body: row.body,
     characterCount: row.character_count,
-    requiresApproval: row.requires_approval,
+    // Fail closed, as the retry path does: the page and the API must agree on the approval gate.
+    requiresApproval: row.requires_approval !== false,
     approvedRevision: row.approved_revision,
     validationWarnings: row.validation_warnings,
     imagePrompt: row.image_prompt ?? undefined,
@@ -513,10 +533,18 @@ export async function retryPublication(id: string) {
 
   const supabase = getSupabaseServerClient();
 
-  const [{ data: task, error: taskError }, { data: assets, error: assetError }, { data: drafts, error: draftError }] = await Promise.all([
+  const [
+    { data: task, error: taskError },
+    { data: assets, error: assetError },
+    { data: drafts, error: draftError },
+    { data: approvalRows, error: approvalsError },
+    { data: attemptRows, error: attemptsError },
+  ] = await Promise.all([
     supabase.from("publication_tasks").select("*").eq("id", id).single(),
     supabase.from("source_assets").select("*").eq("task_id", id).order("canonical_date", { ascending: false }).limit(1),
-    supabase.from("channel_drafts").select("*").eq("task_id", id).order("approved_revision", { ascending: false }).limit(1),
+    supabase.from("channel_drafts").select("channel, approved_revision, requires_approval").eq("task_id", id),
+    supabase.from("approval_decisions").select("channel, status").eq("task_id", id),
+    supabase.from("publish_attempts").select("id, status, idempotency_key, last_error").eq("task_id", id),
   ]);
 
   if (taskError?.message?.includes("0 rows")) {
@@ -526,11 +554,46 @@ export async function retryPublication(id: string) {
   assertNoError(taskError);
   assertNoError(assetError);
   assertNoError(draftError);
+  assertNoError(approvalsError);
+  assertNoError(attemptsError);
 
   const currentTask = task as TaskRow;
   const asset = (assets as SourceAssetRow[])[0];
-  const draft = (drafts as ChannelDraftRow[])[0];
 
+  const refusal = retryRefusal(currentTask.status as PublicationStatus, currentTask.retry_count);
+  if (refusal) {
+    throw new DomainError(refusal, 409);
+  }
+
+  // Plan before writing anything (lib/retry-policy.ts): only the current draft of a channel that
+  // passes the editorial gate is a target; its failed or draft attempts go back to the queue and a
+  // target that never had an attempt gets one. Nothing to retry is a 409 that leaves the task untouched.
+  const attemptsRead = (attemptRows ?? []) as Array<{ id: string; status: string; idempotency_key: string; last_error: string | null }>;
+  const attempts = attemptsRead.map((row) => ({
+    id: row.id,
+    status: row.status as PublishAttempt["status"],
+    idempotencyKey: row.idempotency_key,
+  }));
+  const targets = retryTargets({
+    asset: asset ? { normalizedUrl: asset.normalized_url, canonicalDate: asset.canonical_date } : null,
+    drafts: ((drafts ?? []) as Array<{ channel: string; approved_revision: number; requires_approval: boolean | null }>).map((row) => ({
+      channel: row.channel as Channel,
+      approvedRevision: row.approved_revision,
+      // Fail closed: anything but an explicit false keeps the draft behind the approval gate.
+      requiresApproval: row.requires_approval !== false,
+    })),
+    approvals: ((approvalRows ?? []) as Array<{ channel: string; status: string }>).map((row) => ({
+      channel: row.channel as Channel,
+      status: row.status as ApprovalDecision["status"],
+    })),
+  });
+  const plan = planRetry(attempts, targets);
+  if (!plan) {
+    throw new DomainError(NOTHING_TO_RETRY, 409);
+  }
+
+  // Claim the task with the values that were read, so two concurrent retries cannot both pass and a
+  // retry count changed in between is not overwritten: the second UPDATE matches no row.
   const { data: updatedTask, error: updateError } = await supabase
     .from("publication_tasks")
     .update({
@@ -540,60 +603,93 @@ export async function retryPublication(id: string) {
       updated_at: new Date().toISOString(),
     })
     .eq("id", id)
+    .eq("status", currentTask.status)
+    .eq("retry_count", currentTask.retry_count)
+    .lt("retry_count", MAX_PUBLICATION_RETRIES)
     .select("*")
-    .single();
+    .maybeSingle();
 
   assertNoError(updateError);
 
-  if (asset && draft) {
-    const accountId = `${draft.channel}-main`;
-    const idempotencyKey = buildPublishIdempotencyKey({
-      normalizedUrl: asset.normalized_url,
-      canonicalDate: asset.canonical_date,
-      channel: draft.channel,
-      accountId,
-      approvedRevision: draft.approved_revision,
-    });
-
-    const { data: existingAttempt, error: existingError } = await supabase
-      .from("publish_attempts")
-      .select("id")
-      .eq("idempotency_key", idempotencyKey)
-      .maybeSingle();
-
-    assertNoError(existingError);
-
-    if (existingAttempt) {
-      const { error } = await supabase
-        .from("publish_attempts")
-        .update({
-          status: "queued",
-          last_error: null,
-        })
-        .eq("id", existingAttempt.id);
-      assertNoError(error);
-    } else {
-      const { error } = await supabase.from("publish_attempts").insert({
-        task_id: id,
-        channel: draft.channel,
-        account_id: accountId,
-        idempotency_key: idempotencyKey,
-        status: "queued",
-      });
-      assertNoError(error);
-    }
+  if (!updatedTask) {
+    throw new DomainError("The publication changed while it was being retried. Reload and try again.", 409);
   }
 
-  const { error: eventError } = await supabase.from("execution_events").insert({
-    task_id: id,
-    stage: "retry",
-    status: "retryable_error",
-    message: "Reintento manual encolado conservando la misma llave de idempotencia.",
-    latency_ms: 70,
-    estimated_cost_usd: 0,
-  });
+  // What this request queued, so a failure further on can put it back.
+  const requeued: Array<{ id: string; previousStatus: PublishAttempt["status"]; previousLastError: string | null }> = [];
+  let createdKeys: string[] = [];
+  try {
+    if (plan.requeueIds.length > 0) {
+      // The status condition is part of the UPDATE: an attempt published in the meantime stays published.
+      const { data: updatedRows, error } = await supabase
+        .from("publish_attempts")
+        .update({ status: "queued", last_error: null })
+        .in("id", plan.requeueIds)
+        .in("status", [...REQUEUEABLE_ATTEMPT_STATUSES])
+        .select("id");
+      assertNoError(error);
+      for (const row of (updatedRows ?? []) as Array<{ id: string }>) {
+        const read = attemptsRead.find((attempt) => attempt.id === row.id)!;
+        requeued.push({ id: row.id, previousStatus: read.status as PublishAttempt["status"], previousLastError: read.last_error });
+      }
+    }
 
-  assertNoError(eventError);
+    if (plan.newAttempts.length > 0) {
+      const { error } = await supabase.from("publish_attempts").insert(
+        plan.newAttempts.map((target) => ({
+          task_id: id,
+          channel: target.channel,
+          account_id: target.accountId,
+          idempotency_key: target.idempotencyKey,
+          status: "queued",
+        })),
+      );
+      assertNoError(error);
+      createdKeys = plan.newAttempts.map((target) => target.idempotencyKey);
+    }
+
+    const { error: eventError } = await supabase.from("execution_events").insert({
+      task_id: id,
+      stage: "retry",
+      status: "retryable_error",
+      message: retryEventMessage(requeued.length, createdKeys.length),
+      latency_ms: 70,
+      estimated_cost_usd: 0,
+    });
+    assertNoError(eventError);
+  } catch (error) {
+    // Undo what this request did, so a failure here leaves neither the task stuck in "processing"
+    // (which cannot be retried) nor attempts queued behind a task that says it was not retried.
+    // Best effort, and only rows still in the state this request left them in: the original error
+    // is the one reported. A rollback write that fails is logged by its error code only (a message
+    // can repeat row values), so a half-undone retry leaves a trace in the server logs.
+    const logRollbackError = (step: string, rollbackError: { code?: string } | null) => {
+      if (rollbackError) console.error(`[retry] rollback of ${step} failed`, rollbackError.code || "unknown");
+    };
+    for (const entry of requeued) {
+      const { error: attemptError } = await supabase
+        .from("publish_attempts")
+        .update({ status: entry.previousStatus, last_error: entry.previousLastError })
+        .eq("id", entry.id)
+        .eq("status", "queued");
+      logRollbackError("a requeued attempt", attemptError);
+    }
+    if (createdKeys.length > 0) {
+      const { error: deleteError } = await supabase
+        .from("publish_attempts")
+        .delete()
+        .in("idempotency_key", createdKeys)
+        .eq("status", "queued");
+      logRollbackError("the new attempts", deleteError);
+    }
+    const { error: taskRollbackError } = await supabase
+      .from("publication_tasks")
+      .update({ status: currentTask.status, retry_count: currentTask.retry_count, last_run_stage: currentTask.last_run_stage })
+      .eq("id", id)
+      .eq("status", "processing");
+    logRollbackError("the task", taskRollbackError);
+    throw error;
+  }
 
   return mapTask(updatedTask as TaskRow);
 }

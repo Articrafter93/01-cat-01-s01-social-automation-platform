@@ -1,16 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { DomainError } from "@/lib/api/errors";
+import { hasSupabaseServerConfig } from "@/lib/supabase/config";
 
-export function hasSupabaseServerConfig() {
-  if (process.env.DATA_SOURCE_MODE === "local" || process.env.APP_DATA_SOURCE === "local") {
-    return false;
-  }
-
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY),
-  );
-}
+export { hasSupabaseServerConfig };
 
 export function getSupabaseServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -147,6 +147,85 @@ union all
 select task_two.id, 'publish-channel', 'ok', 'LinkedIn, Facebook and Instagram published successfully.', 5320, 0.18, now() - interval '90 minutes'
 from task_two;
 
+-- A partially published task that the Retry button can act on: LinkedIn went out, Facebook failed
+-- with a temporary error, and both channels are approved. The idempotency keys are the ones the app
+-- computes (src/lib/publishing/idempotency.ts: sha256 of normalized_url:canonical_date:channel:
+-- account_id:approved_revision), so a retry requeues the failed attempt instead of creating another.
+-- tests/domain/seed-retry.test.ts recomputes them.
+with task_three as (
+  insert into publication_tasks (
+    correlation_id,
+    source_url,
+    normalized_url,
+    source_type,
+    title,
+    status,
+    brand,
+    locale,
+    tone,
+    use_ai_image,
+    requested_channels,
+    total_estimated_cost_usd,
+    total_latency_ms,
+    retry_count,
+    last_run_stage,
+    created_at,
+    updated_at
+  )
+  values (
+    'corr_20260410_003',
+    'https://example.com/insights/retry-ready-editorial-calendar',
+    'https://example.com/insights/retry-ready-editorial-calendar',
+    'article',
+    'Planning an editorial calendar that survives a failed channel',
+    'partially_published',
+    'Antigravity',
+    'en-US',
+    'Clear executive',
+    false,
+    array['linkedin', 'facebook'],
+    1.37,
+    9640,
+    0,
+    'publish-channel',
+    now() - interval '300 minutes',
+    now() - interval '45 minutes'
+  )
+  returning id
+),
+asset_three as (
+  insert into source_assets (task_id, source_type, normalized_url, canonical_date, title, author, summary, transcript_status, extraction_status)
+  select task_three.id, 'article', 'https://example.com/insights/retry-ready-editorial-calendar', date '2026-04-10', 'Planning an editorial calendar that survives a failed channel', 'Editorial Ops Weekly', 'How to keep a multi-channel calendar on track when one network fails, without publishing twice.', 'not_required', 'ok'
+  from task_three
+),
+drafts_three as (
+  insert into channel_drafts (task_id, channel, headline, body, character_count, requires_approval, approved_revision, validation_warnings, image_prompt)
+  select task_three.id, 'linkedin', 'A calendar that bends instead of breaking', 'When one network fails, the rest of the plan should still ship, and the retry should never post twice.', 112, true, 1, array[]::text[], null
+  from task_three
+  union all
+  select task_three.id, 'facebook', 'One failed channel, zero duplicates', 'Retry only what failed, keep the same idempotency key, and leave the published posts alone.', 98, true, 1, array[]::text[], null
+  from task_three
+),
+approvals_three as (
+  insert into approval_decisions (task_id, channel, status, reviewer_name, reviewed_at, note)
+  select task_three.id, 'linkedin', 'approved', 'Laura Ops', now() - interval '120 minutes', null
+  from task_three
+  union all
+  select task_three.id, 'facebook', 'approved', 'Laura Ops', now() - interval '120 minutes', null
+  from task_three
+),
+attempts_three as (
+  insert into publish_attempts (task_id, channel, account_id, idempotency_key, status, published_at, external_post_id, last_error)
+  select task_three.id, 'linkedin', 'linkedin-main', 'fbf498a05e5302bd3734fa0d1751e249288f5eaaaa04f372d074be8f14d399d2', 'published', now() - interval '46 minutes', 'li_445566', null
+  from task_three
+  union all
+  select task_three.id, 'facebook', 'facebook-main', '4cdd049a3b7c04561c71f6772d7d01429e0854b5a856d0756d03be916f5b22ba', 'failed', null, null, 'Facebook API answered 503 (temporary outage). Safe to retry.'
+  from task_three
+)
+insert into execution_events (task_id, stage, status, message, latency_ms, estimated_cost_usd, created_at)
+select task_three.id, 'publish-channel', 'retryable_error', 'LinkedIn published. Facebook failed with a temporary error and can be retried.', 4110, 0.12, now() - interval '45 minutes'
+from task_three;
+
 insert into prompt_templates (brand, channel, locale, content_type, version, status, template)
 values
   ('Antigravity', 'base', 'es-CO', 'article', 4, 'active', 'Resume la fuente con tono ejecutivo, conserva hechos verificables y devuelve JSON tipado con ángulo editorial y riesgos.'),

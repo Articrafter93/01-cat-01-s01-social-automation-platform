@@ -1,4 +1,6 @@
+import { DomainError } from "@/lib/api/errors";
 import { buildPublishIdempotencyKey } from "@/lib/publishing/idempotency";
+import { NOTHING_TO_RETRY, planRetry, retryEventMessage, retryRefusal, retryTargets } from "@/lib/retry-policy";
 import type {
   ApprovalDecision,
   Channel,
@@ -252,6 +254,28 @@ export async function retryDemoPublication(id: string) {
     return null;
   }
 
+  const refusal = retryRefusal(task.status, task.metrics.retries);
+  if (refusal) {
+    throw new DomainError(refusal, 409);
+  }
+
+  // Plan before changing anything (lib/retry-policy.ts): only the current draft of a channel that
+  // passes the editorial gate is a target, its failed or draft attempts go back to the queue, and a
+  // target that never had an attempt gets one. A published attempt never goes back.
+  const asset = sourceAssets
+    .filter((entry) => entry.taskId === id)
+    .sort((a, b) => b.canonicalDate.localeCompare(a.canonicalDate))[0];
+  const targets = retryTargets({
+    asset: asset ?? null,
+    drafts: channelDrafts.filter((entry) => entry.taskId === id),
+    approvals: approvals.filter((entry) => entry.taskId === id),
+  });
+  const taskAttempts = publishAttempts.filter((attempt) => attempt.taskId === id);
+  const plan = planRetry(taskAttempts, targets);
+  if (!plan) {
+    throw new DomainError(NOTHING_TO_RETRY, 409);
+  }
+
   touchTask(task, {
     status: "processing",
     lastRunStage: "retry",
@@ -261,44 +285,22 @@ export async function retryDemoPublication(id: string) {
     },
   });
 
-  const asset = sourceAssets
-    .filter((entry) => entry.taskId === id)
-    .sort((a, b) => b.canonicalDate.localeCompare(a.canonicalDate))[0];
-  const draft = channelDrafts
-    .filter((entry) => entry.taskId === id)
-    .sort((a, b) => b.approvedRevision - a.approvedRevision)[0];
-
-  if (asset && draft) {
-    const accountId = `${draft.channel}-main`;
-    const idempotencyKey = buildPublishIdempotencyKey({
-      normalizedUrl: asset.normalizedUrl,
-      canonicalDate: asset.canonicalDate,
-      channel: draft.channel,
-      accountId,
-      approvedRevision: draft.approvedRevision,
-    });
-    const existingAttempt = publishAttempts.find((attempt) => attempt.idempotencyKey === idempotencyKey);
-
-    if (existingAttempt) {
-      existingAttempt.status = "queued";
-      existingAttempt.lastError = undefined;
-    } else {
-      publishAttempts.push({
-        id: buildId("publish"),
-        taskId: id,
-        channel: draft.channel,
-        accountId,
-        idempotencyKey,
-        status: "queued",
-      });
+  for (const attempt of taskAttempts) {
+    if (plan.requeueIds.includes(attempt.id)) {
+      attempt.status = "queued";
+      attempt.lastError = undefined;
     }
+  }
+
+  for (const target of plan.newAttempts) {
+    publishAttempts.push({ id: buildId("publish"), taskId: id, ...target, status: "queued" });
   }
 
   addEvent({
     taskId: id,
     stage: "retry",
     status: "retryable_error",
-    message: "Manual retry queued, preserving the same idempotency key.",
+    message: retryEventMessage(plan.requeueIds.length, plan.newAttempts.length),
     latencyMs: 70,
     estimatedCostUsd: 0,
   });
